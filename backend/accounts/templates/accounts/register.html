@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Register</title>
+</head>
+<body>
+    <h1>Register</h1>
+
+    {% if error %}
+        <p>{{ error }}</p>
+    {% endif %}
+
+    <form method="POST">
+
+        {% csrf_token %}
+
+        <label for="uname"><b>Username</b></label>
+        <input type="text" placeholder="Enter Username" name="uname" required>
+
+        <label for="mail"><b>Email</b></label>
+        <input type="email" placeholder="Enter Email" name="mail" required>
+
+        <label for="pass"><b>Password</b></label>
+        <input type="password" placeholder="Enter Password" name="pass" required>
+
+        <label for="pass2"><b>Confirm password</b></label>
+        <input type="password" placeholder="Confirm password" name="pass2" required>
+
+        <button type="submit">Register</button>
+        
+    </form>
+</body>
+</html>

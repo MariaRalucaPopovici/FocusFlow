@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>FocusFlow Tasks</title>
+</head>
+
+<body>
+    <h1>My Tasks</h1>
+
+    <form method="POST" action="{% url 'logout' %}">
+        {% csrf_token %}
+        <button type="submit">Logout</button>
+    </form>
+
+    <br><br>
+
+    <a href="{% url 'add_task' %}">Add Task</a>
+
+    {% for task in tasks %}
+        <h2>{{ task.title}}</h2>
+        <p>{{ task.description}}</p>
+        <p>Deadline: {{ task.deadline}}</p>
+        <p>Urgent: {{ task.urgent }}</p>
+        <p>Important: {{ task.important}}</p>
+        <p>Completed: {{ task.completed }}</p>
+        <a href="{% url 'edit_task' task.id %}">Edit Task</a>
+        <a href="{% url 'toggle_complete' task.id %}">
+            {% if task.completed %}
+                Mark Incomplete
+            {% else %}
+                Mark Complete
+            {% endif %}
+        </a>
+        <a href="{% url 'delete_task' task.id %}">Delete Task</a>
+        <hr> 
+    
+    {% empty %}
+        <p>You don't have any tasks yet.</p>
+    
+    {% endfor %}
+</body>
+</html>
