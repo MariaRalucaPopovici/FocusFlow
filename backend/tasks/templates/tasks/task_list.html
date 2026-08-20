@@ -1,42 +1,69 @@
-<!DOCTYPE html>
-<html>
-<head>
-    <title>FocusFlow Tasks</title>
-</head>
+{% extends "base.html" %}
 
-<body>
-    <h1>My Tasks</h1>
+{% block title %}
+My tasks | FocusFlow
+{% endblock %}
 
-    <form method="POST" action="{% url 'logout' %}">
-        {% csrf_token %}
-        <button type="submit">Logout</button>
-    </form>
+{% block content %}
 
-    <br><br>
+<div class="page-heading">
+    <div>
+        <h2>My Tasks</h2>
+        <p>Manage what needs your attention.</p>
+    </div>
+    
+    <a href="{% url 'add_task' %}" class="button-primary"> + Add Task</a>
+</div>
 
-    <a href="{% url 'add_task' %}">Add Task</a>
+{% for task in tasks %}
 
-    {% for task in tasks %}
-        <h2>{{ task.title}}</h2>
-        <p>{{ task.description}}</p>
-        <p>Deadline: {{ task.deadline}}</p>
-        <p>Urgent: {{ task.urgent }}</p>
-        <p>Important: {{ task.important}}</p>
-        <p>Completed: {{ task.completed }}</p>
-        <a href="{% url 'edit_task' task.id %}">Edit Task</a>
-        <a href="{% url 'toggle_complete' task.id %}">
+<div class="task-card">
+
+    <h3>{{ task.title}}</h3>
+
+    {% if task.description %}
+        <p> {{ task.description }} </p>
+    {% endif %}
+
+    {% if task.deadline %}
+        <p><strong>Deadline:</strong> {{ task.deadline }} </p>
+    {% endif %}
+
+    <div class="task-status">
+        {% if task.urgent %}
+            <span class="status-badge urgent">Urgent</span>
+        {% endif %}
+
+        {% if task.important %}
+            <span class="status-badge important">Important</span>
+        {% endif %}
+
+        {% if task.completed %}
+            <span class="status-badge completed">Completed</span>
+        {% endif %}
+    </div>
+
+    <div class="task-actions">
+        <a href="{% url 'edit_task' task.id %}" class="button-secondary">Edit</a>
+        <a href="{% url 'toggle_complete' task.id %}" class="button-secondary">
             {% if task.completed %}
                 Mark Incomplete
             {% else %}
                 Mark Complete
             {% endif %}
         </a>
-        <a href="{% url 'delete_task' task.id %}">Delete Task</a>
-        <hr> 
-    
-    {% empty %}
-        <p>You don't have any tasks yet.</p>
-    
-    {% endfor %}
-</body>
-</html>
+        <a href="{% url 'delete_task' task.id %}" class="button-secondary">Delete</a>
+    </div>
+</div>
+
+{% empty %}
+
+<div class="empty-state">
+    <h3>No tasks yet</h3>
+    <p>Add your first task to get started</p>
+    <a href="{% url 'add_task' %}" class="button-primary">Add Task</a>
+</div>
+
+{% endfor %}
+
+{% endblock %}

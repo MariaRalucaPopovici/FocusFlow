@@ -1,22 +1,50 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Add Task</title>
-</head>
-<body>
-    <h1>Add Task</h1>
-    <form method="POST">
+{% extends "base.html" %}
 
-        {% csrf_token %}
-        {{ form.as_p}}
+{% block title %}
+Add Task | FocusFlow
+{% endblock %}
 
-        <button type="submit">Save Task</button>
-        
-    </form>
+{% block content %}
 
-    <a href="{% url 'task_list' %}">Back to Tasks</a> 
+<h2>Add Task</h2>
 
-</body>
-</html>
+<form method="POST" class="task-form">
+    {% csrf_token %}
+
+    <div class="form-field">
+        {{ form.title.label_tag }}
+        {{ form.title }}
+        {{ form.title.errors }}
+    </div>
+
+    <div class="form-field">
+        {{ form.description.label_tag }}
+        {{ form.description }}
+        {{ form.description.errors }}
+    </div>
+
+    <div class="form-field">
+        {{ form.deadline.label_tag }}
+        <div class="deadline-fields">{{ form.deadline }}</div>
+        {{ form.deadline.errors }}
+    </div>
+
+    <div class="task-options">
+        <label class="checkbox-option">
+            {{ form.urgent }}
+            <span>Urgent</span>
+        </label>
+
+        <label class="checkbox-option">
+            {{ form.important }}
+            <span>Important</span>
+        </label>
+    </div>
+
+    <div class="form-actions">
+        <button type="submit" class="button-primary">Save Task</button>
+        <a href="{% url 'task_list' %}" class="button-secondary">Back to Tasks</a>
+    </div>  
+</form>
+
+{% endblock %}

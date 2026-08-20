@@ -1,0 +1,894 @@
+/* =========================================================
+    FOCUSFLOW DESIGN SYSTEM
+    Default theme: Old Notepad
+   ========================================================= */
+
+
+/* =========================
+    1. THEME VARIABLES
+   ========================= */
+
+:root,
+[data-theme="notepad"] {
+    --bg: #f5eddd;
+    --surface: #fffaf0;
+    --surface-soft: #f1e3c7;
+
+    --text: #332a24;
+    --muted: #74675b;
+
+    --primary: #8b5636;
+    --primary-hover: #704329;
+    --primary-text: #ffffff;
+
+    --border: #d8c7aa;
+    --focus: #ba875e;
+
+    --success: #55745f;
+    --success-bg: #e2ede3;
+
+    --urgent: #b94f51;
+    --urgent-bg: #f7dddd;
+
+    --important: #9b681e;
+    --important-bg: #f5e5bd;
+
+    --danger: #b34f5a;
+    --danger-hover: #913d47;
+
+    --shadow: 0 3px 12px rgba(72, 51, 34, 0.07);
+
+    --page-pattern:
+        repeating-linear-gradient(
+            to bottom,
+            transparent 0,
+            transparent 31px,
+            rgba(113, 142, 162, 0.09) 32px
+        );
+}
+
+
+/* AUTUMN */
+
+[data-theme="autumn"] {
+    --bg: #faf6f0;
+    --surface: #fffaf5;
+    --surface-soft: #f6dfce;
+
+    --text: #3d2923;
+    --muted: #80665b;
+
+    --primary: #ae5539;
+    --primary-hover: #91432d;
+    --primary-text: #ffffff;
+
+    --border: #e2cabc;
+    --focus: #cf7958;
+
+    --success: #607b65;
+    --success-bg: #e1ece2;
+
+    --urgent: #bc5253;
+    --urgent-bg: #f9e0df;
+
+    --important: #a66d24;
+    --important-bg: #f7e8c8;
+
+    --danger: #b94e52;
+    --danger-hover: #973c42;
+
+    --shadow: 0 4px 14px rgba(120, 69, 43, 0.08);
+    --page-pattern: none;
+}
+
+
+/* WINTER WONDERLAND */
+
+[data-theme="winter"] {
+    --bg: #f3f7fa;
+    --surface: #ffffff;
+    --surface-soft: #e3eef5;
+
+    --text: #172a3a;
+    --muted: #64798a;
+
+    --primary: #315d7c;
+    --primary-hover: #244962;
+    --primary-text: #ffffff;
+
+    --border: #cadce7;
+    --focus: #74a9c6;
+
+    --success: #397d76;
+    --success-bg: #dcefeb;
+
+    --urgent: #b85059;
+    --urgent-bg: #f6dfe1;
+
+    --important: #9d712b;
+    --important-bg: #f6ebcf;
+
+    --danger: #b64f58;
+    --danger-hover: #923d46;
+
+    --shadow: 0 4px 15px rgba(42, 79, 105, 0.07);
+    --page-pattern: none;
+}
+
+
+/* CHRISTMAS */
+
+[data-theme="christmas"] {
+    --bg: #fffaf7;
+    --surface: #ffffff;
+    --surface-soft: #edf4ee;
+
+    --text: #24382e;
+    --muted: #64746a;
+
+    --primary: #236143;
+    --primary-hover: #174b33;
+    --primary-text: #ffffff;
+
+    --border: #d5dfd7;
+    --focus: #4c8768;
+
+    --success: #347351;
+    --success-bg: #e0eee5;
+
+    --urgent: #b82f39;
+    --urgent-bg: #f9dfe1;
+
+    --important: #b67522;
+    --important-bg: #f8e9ca;
+
+    --danger: #c3353e;
+    --danger-hover: #9e2831;
+
+    --shadow: 0 4px 14px rgba(35, 83, 57, 0.07);
+    --page-pattern: none;
+}
+
+
+/* SPRING */
+
+[data-theme="spring"] {
+    --bg: #fbf9f2;
+    --surface: #ffffff;
+    --surface-soft: #e7f0df;
+
+    --text: #304132;
+    --muted: #6d786c;
+
+    --primary: #678357;
+    --primary-hover: #526b45;
+    --primary-text: #ffffff;
+
+    --border: #d6dfcf;
+    --focus: #8faa7c;
+
+    --success: #548263;
+    --success-bg: #e0efe4;
+
+    --urgent: #bc6371;
+    --urgent-bg: #f7e2e6;
+
+    --important: #ad7c2e;
+    --important-bg: #f7eccf;
+
+    --danger: #b85764;
+    --danger-hover: #95434f;
+
+    --shadow: 0 4px 14px rgba(74, 104, 68, 0.07);
+    --page-pattern: none;
+}
+
+
+/* EASTER */
+
+[data-theme="easter"] {
+    --bg: #fdfaf3;
+    --surface: #ffffff;
+    --surface-soft: #eee7f7;
+
+    --text: #393347;
+    --muted: #766e82;
+
+    --primary: #75629b;
+    --primary-hover: #5e4c80;
+    --primary-text: #ffffff;
+
+    --border: #ddd4e8;
+    --focus: #9b88bd;
+
+    --success: #629273;
+    --success-bg: #e0efe5;
+
+    --urgent: #c26578;
+    --urgent-bg: #f8e1e7;
+
+    --important: #b48527;
+    --important-bg: #faedc7;
+
+    --danger: #bd596d;
+    --danger-hover: #984456;
+
+    --shadow: 0 4px 14px rgba(88, 68, 112, 0.07);
+    --page-pattern: none;
+}
+
+
+/* SUMMER */
+
+[data-theme="summer"] {
+    --bg: #f8fbf7;
+    --surface: #ffffff;
+    --surface-soft: #e4f2ed;
+
+    --text: #203c40;
+    --muted: #617a7c;
+
+    --primary: #277c7a;
+    --primary-hover: #1d6261;
+    --primary-text: #ffffff;
+
+    --border: #cae1dc;
+    --focus: #54a5a1;
+
+    --success: #3d866b;
+    --success-bg: #dff1e8;
+
+    --urgent: #cf6160;
+    --urgent-bg: #fae1df;
+
+    --important: #bf8126;
+    --important-bg: #f9ebc8;
+
+    --danger: #c75558;
+    --danger-hover: #a03f43;
+
+    --shadow: 0 4px 14px rgba(41, 116, 112, 0.07);
+    --page-pattern: none;
+}
+
+
+/* MIDNIGHT */
+
+[data-theme="midnight"] {
+    --bg: #15151d;
+    --surface: #20202a;
+    --surface-soft: #292936;
+
+    --text: #f2f0f7;
+    --muted: #b8b4c5;
+
+    --primary: #9183d4;
+    --primary-hover: #a99ce5;
+    --primary-text: #17141f;
+
+    --border: #3b3948;
+    --focus: #a89ce5;
+
+    --success: #67aa92;
+    --success-bg: #263b35;
+
+    --urgent: #df7a82;
+    --urgent-bg: #43282e;
+
+    --important: #dbad55;
+    --important-bg: #463923;
+
+    --danger: #dc737c;
+    --danger-hover: #e88c93;
+
+    --shadow: none;
+    --page-pattern: none;
+}
+
+
+/* DARK AUTUMN */
+
+[data-theme="autumn-dark"] {
+    --bg: #1d1815;
+    --surface: #29211c;
+    --surface-soft: #35281f;
+
+    --text: #f5eadf;
+    --muted: #c0aa98;
+
+    --primary: #dd7957;
+    --primary-hover: #eb9273;
+    --primary-text: #21130e;
+
+    --border: #49382e;
+    --focus: #e0906e;
+
+    --success: #7fa486;
+    --success-bg: #29372d;
+
+    --urgent: #e17779;
+    --urgent-bg: #43282a;
+
+    --important: #dda651;
+    --important-bg: #44351f;
+
+    --danger: #db6d71;
+    --danger-hover: #e78b8e;
+
+    --shadow: none;
+    --page-pattern: none;
+}
+
+
+/* =========================
+    2. GLOBAL ELEMENTS
+   ========================= */
+
+* {
+    box-sizing: border-box;
+}
+
+html {
+    min-height: 100%;
+}
+
+body {
+    margin: 0;
+    min-height: 100vh;
+
+    font-family:
+        Inter,
+        "Segoe UI",
+        Arial,
+        Helvetica,
+        sans-serif;
+
+    background-color: var(--bg);
+    background-image: var(--page-pattern);
+
+    color: var(--text);
+
+    transition:
+        background-color 0.2s ease,
+        color 0.2s ease;
+}
+
+
+/* =========================
+    3. HEADER / NAVIGATION
+   ========================= */
+
+header {
+    background-color: var(--surface);
+
+    padding: 20px 8%;
+
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 24px;
+
+    border-bottom: 1px solid var(--border);
+}
+
+header h1 {
+    margin: 0;
+
+    font-size: 27px;
+    line-height: 1;
+
+    color: var(--text);
+}
+
+header nav {
+    display: flex;
+    align-items: center;
+    gap: 30px;
+}
+
+header nav a,
+.nav-button {
+    margin: 0;
+    padding: 8px 0;
+
+    display: inline-flex;
+    align-items: center;
+
+    border: 0;
+    background: transparent;
+
+    color: var(--muted);
+
+    font: inherit;
+    font-weight: 700;
+
+    text-decoration: none;
+    cursor: pointer;
+}
+
+header nav a:hover,
+.nav-button:hover {
+    color: var(--primary);
+}
+
+.logout-form {
+    margin: 0;
+    padding: 0;
+
+    max-width: none;
+
+    display: flex;
+    align-items: center;
+}
+
+.logout-form button {
+    margin: 0;
+}
+
+#theme-select {
+    padding: 8px 10px;
+
+    border: 1px solid var(--border);
+    border-radius: 7px;
+
+    background-color: var(--surface);
+    color: var(--text);
+
+    font: inherit;
+    font-weight: 600;
+
+    cursor: pointer;
+}
+
+#theme-select:focus {
+    outline: 3px solid color-mix(in srgb, var(--focus) 28%, transparent);
+    border-color: var(--focus);
+}
+
+
+/* =========================
+    4. MAIN LAYOUT
+   ========================= */
+
+main {
+    width: 90%;
+    max-width: 1000px;
+
+    margin: 40px auto;
+}
+
+main h2 {
+    margin-top: 0;
+    margin-bottom: 25px;
+
+    font-size: 32px;
+}
+
+main a {
+    color: var(--primary);
+
+    font-weight: 650;
+    text-decoration: none;
+}
+
+main a:hover {
+    text-decoration: underline;
+}
+
+.page-heading {
+    margin-bottom: 30px;
+
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 20px;
+}
+
+.page-heading h2 {
+    margin-bottom: 5px;
+}
+
+.page-heading p {
+    margin: 0;
+    color: var(--muted);
+}
+
+
+/* =========================
+    5. FORMS
+   ========================= */
+
+form {
+    max-width: 520px;
+}
+
+.task-form {
+    max-width: 650px;
+}
+
+.form-field {
+    margin-bottom: 22px;
+}
+
+form label,
+.form-field label {
+    display: block;
+
+    margin-top: 0;
+    margin-bottom: 8px;
+
+    font-weight: 700;
+}
+
+form input,
+form textarea,
+form select {
+    width: 100%;
+
+    padding: 11px 12px;
+
+    border: 1px solid var(--border);
+    border-radius: 7px;
+
+    background-color: var(--surface);
+    color: var(--text);
+
+    font: inherit;
+}
+
+form textarea {
+    min-height: 110px;
+    resize: vertical;
+}
+
+form input:focus,
+form textarea:focus,
+form select:focus {
+    outline: 3px solid color-mix(in srgb, var(--focus) 28%, transparent);
+    border-color: var(--focus);
+}
+
+
+/* =========================
+    6. DEADLINE DATE + TIME
+   ========================= */
+
+.deadline-fields {
+    display: grid;
+
+    grid-template-columns:
+        minmax(0, 1fr)
+        minmax(140px, 180px);
+
+    gap: 14px;
+}
+
+.deadline-fields input {
+    width: 100%;
+    min-width: 0;
+    min-height: 44px;
+
+    padding: 10px 12px;
+
+    border: 1px solid var(--border);
+    border-radius: 7px;
+
+    background-color: var(--surface);
+    color: var(--text);
+
+    font: inherit;
+}
+
+
+/* =========================
+    7. CHECKBOX OPTIONS
+   ========================= */
+
+.task-options {
+    margin: 20px 0 28px;
+
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+
+    gap: 30px;
+}
+
+.checkbox-option {
+    margin: 0;
+
+    display: inline-flex;
+    align-items: center;
+
+    gap: 8px;
+
+    font-weight: 650;
+    cursor: pointer;
+}
+
+.checkbox-option input {
+    width: auto;
+    margin: 0;
+}
+
+
+/* =========================
+    8. BUTTON SYSTEM
+   ========================= */
+
+button,
+.button-primary,
+.button-secondary,
+.button-danger {
+    min-height: 44px;
+
+    padding: 10px 18px;
+
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+
+    border-radius: 8px;
+
+    font: inherit;
+    font-weight: 700;
+
+    text-decoration: none;
+    cursor: pointer;
+}
+
+.button-primary {
+    border: 1px solid var(--primary);
+
+    background-color: var(--primary);
+    color: var(--primary-text);
+}
+
+.button-primary:hover {
+    background-color: var(--primary-hover);
+    border-color: var(--primary-hover);
+
+    text-decoration: none;
+}
+
+.button-secondary {
+    border: 1px solid var(--border);
+
+    background-color: var(--surface);
+    color: var(--primary);
+}
+
+.button-secondary:hover {
+    background-color: var(--surface-soft);
+    text-decoration: none;
+}
+
+.button-danger {
+    border: 1px solid var(--danger);
+
+    background-color: var(--danger);
+    color: #ffffff;
+}
+
+.button-danger:hover {
+    background-color: var(--danger-hover);
+    border-color: var(--danger-hover);
+}
+
+.form-actions {
+    margin-top: 25px;
+
+    display: flex;
+    align-items: center;
+    gap: 14px;
+}
+
+.form-actions button {
+    margin: 0;
+}
+
+.form-actions form {
+    margin: 0;
+}
+
+
+/* =========================
+    9. TASK CARDS
+   ========================= */
+
+.task-card {
+    margin-bottom: 20px;
+    padding: 24px;
+
+    background-color: var(--surface);
+
+    border: 1px solid var(--border);
+    border-radius: 10px;
+
+    box-shadow: var(--shadow);
+}
+
+.task-card h3 {
+    margin-top: 0;
+    margin-bottom: 12px;
+
+    font-size: 22px;
+}
+
+.task-card p {
+    color: var(--text);
+}
+
+.task-status {
+    margin: 18px 0;
+
+    display: flex;
+    flex-wrap: wrap;
+
+    gap: 8px;
+}
+
+.status-badge {
+    padding: 6px 10px;
+
+    border-radius: 999px;
+
+    background-color: var(--surface-soft);
+    color: var(--text);
+
+    font-size: 14px;
+    font-weight: 700;
+}
+
+.status-badge.urgent {
+    background-color: var(--urgent-bg);
+    color: var(--urgent);
+}
+
+.status-badge.important {
+    background-color: var(--important-bg);
+    color: var(--important);
+}
+
+.status-badge.completed {
+    background-color: var(--success-bg);
+    color: var(--success);
+}
+
+.task-actions {
+    margin-top: 20px;
+
+    display: flex;
+    flex-wrap: wrap;
+
+    gap: 12px;
+}
+
+
+/* =========================
+    10. EMPTY STATE
+   ========================= */
+
+.empty-state {
+    padding: 35px;
+
+    background-color: var(--surface);
+
+    border: 1px solid var(--border);
+    border-radius: 10px;
+
+    text-align: center;
+
+    box-shadow: var(--shadow);
+}
+
+
+/* =========================
+    11. DELETE CONFIRMATION
+   ========================= */
+
+.delete-form {
+    margin: 0;
+    max-width: none;
+}
+
+
+/* =========================
+    12. RESPONSIVE DESIGN
+   ========================= */
+
+@media (max-width: 700px) {
+
+    header {
+        padding: 18px 5%;
+
+        flex-wrap: wrap;
+
+        gap: 16px;
+    }
+
+    header h1 {
+        font-size: 23px;
+    }
+
+    header nav {
+        gap: 20px;
+    }
+
+    main {
+        width: 92%;
+        margin: 28px auto;
+    }
+
+    main h2 {
+        font-size: 28px;
+    }
+
+    .page-heading {
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    .page-heading .button-primary {
+        width: 100%;
+    }
+
+    .deadline-fields {
+        grid-template-columns: 1fr;
+    }
+
+    .task-actions {
+        flex-direction: column;
+    }
+
+    .task-actions .button-secondary,
+    .task-actions .button-primary,
+    .task-actions .button-danger {
+        width: 100%;
+    }
+
+    .form-actions {
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    .form-actions .button-primary,
+    .form-actions .button-secondary,
+    .form-actions .button-danger,
+    .form-actions form {
+        width: 100%;
+    }
+
+    .form-actions form button {
+        width: 100%;
+    }
+
+    .task-options {
+        gap: 18px;
+    }
+
+    #theme-select {
+        max-width: 170px;
+}
+}
+
+
+@media (max-width: 430px) {
+
+    header {
+        align-items: flex-start;
+    }
+
+    header nav {
+        width: 100%;
+        justify-content: space-between;
+    }
+
+    .task-card {
+        padding: 19px;
+    }
+
+    main h2 {
+        font-size: 25px;
+    }
+}

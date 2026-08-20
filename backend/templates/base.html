@@ -1,0 +1,77 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en" data-theme="notepad">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{% static 'tasks/styles.css' %}?v=3">
+    <title>
+        {% block title %}
+        FocusFlow
+        {% endblock %}
+    </title>
+</head>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        const themeSelect = document.getElementById("theme-select");
+        // Retrieve the previously selected theme
+        const savedTheme =
+            localStorage.getItem("focusflow-theme") || "notepad";
+        // Apply it to the whole page
+        document.documentElement.dataset.theme = savedTheme;
+        // If the selector exists on this page
+        if (themeSelect) {
+            // Make dropdown display saved choice
+            themeSelect.value = savedTheme;
+            // Change theme immediately when user selects one
+            themeSelect.addEventListener("change", function () {
+                const selectedTheme = themeSelect.value;
+                document.documentElement.dataset.theme = selectedTheme;
+                localStorage.setItem(
+                    "focusflow-theme",
+                    selectedTheme
+                );
+            });
+        }
+    });
+</script>
+
+<body>
+    <header>
+        <h1>FocusFlow</h1>
+
+        <nav>
+            {% if user.is_authenticated %}
+                <a href="{% url 'task_list' %}">My Tasks</a>
+
+                <select id="theme-select" aria-label="Choose theme">
+                    <option value="notepad">Old Notepad</option>
+                    <option value="autumn">Autumn</option>
+                    <option value="winter">Winter Wonderland</option>
+                    <option value="christmas">Christmas</option>
+                    <option value="spring">Spring</option>
+                    <option value="easter">Easter</option>
+                    <option value="summer">Summer</option>
+                    <option value="midnight">Midnight</option>
+                    <option value="autumn-dark">Dark Autumn</option>
+                </select>
+
+                <form method="POST" action="{% url 'logout' %}" class="logout-form">
+                    {% csrf_token %}
+                    <button type="submit">Logout</button>
+                </form>
+            {% else %}
+                <a href="{% url 'login' %}">Login</a>
+                <a href="{% url 'register' %}">Register</a>
+            {% endif %}
+        </nav>
+    </header>
+
+    <main>
+        {% block content %}
+        {% endblock %}
+    </main>
+</body>
+</html>
