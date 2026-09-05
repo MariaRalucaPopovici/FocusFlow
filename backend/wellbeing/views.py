@@ -1,6 +1,5 @@
 from django.contrib.auth.decorators import login_required
-from django.shortcuts import render, redirect
-from django.http import JsonResponse
+from django.shortcuts import render
 from django.db.models import Q
 
 from .forms import DailyCheckInForm
@@ -62,18 +61,4 @@ def strategy_search(request):
             Q(title__icontains=query) | Q(description__icontains=query)
         )
 
-    data = []
-    for s in strategies.order_by("category", "title"):
-        meta = s.get_category_display()
-        if s.duration_minutes:
-            meta += f" · {s.duration_minutes} min"
-        meta += f" · Energy: {s.get_energy_level_display()}"
-
-        data.append({
-            "title": s.title,
-            "meta": meta,
-            "description": s.description,
-            "resource_url": s.resource_url,
-        })
-
-    return JsonResponse({"strategies": data})
+    return render(request, "wellbeing/_strategy_cards.html", {"strategies": strategies})

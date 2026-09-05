@@ -893,9 +893,9 @@ button,
     }
 }
 
-/*  ========================================
-    DAILY RESET
-    ======================================== */
+/*  =========================
+    13. DAILY RESET
+    ========================= */
 
 .field-label {
     margin: 0 0 12px;
@@ -1000,7 +1000,9 @@ button,
     margin: 5px 0;
 }
 
-/* Daily Reset - responsive layout */
+/*  =========================
+    14. STRATEGY LIBRARY
+    ========================= */
 
 @media (max-width: 700px) {
 
@@ -1011,4 +1013,75 @@ button,
     .choice-grid-3 {
         grid-template-columns: 1fr;
     }
+}
+
+/*  =========================
+    14. STRATEGY LIBRARY
+    ========================= */
+
+#strategy-search {
+    width: 100%;
+    max-width: 480px;
+    margin: 4px 0 24px;
+    padding: 12px 16px;
+
+    background-color: var(--surface);
+    color: var(--text);
+
+    border: 1px solid var(--border);
+    border-radius: 999px;
+
+    font-size: 16px;
+    box-shadow: var(--shadow);
+}
+
+#strategy-search:focus {
+    outline: 2px solid var(--focus);
+    outline-offset: 1px;
+    border-color: var(--focus);
+}
+
+.strategy-card {
+    margin-bottom: 20px;
+    padding: 24px;
+
+    background-color: var(--surface);
+
+    border: 1px solid var(--border);
+    border-left: 5px solid var(--primary);
+    border-radius: 10px;
+
+    box-shadow: var(--shadow);
+}
+
+.strategy-card h3 {
+    margin-top: 0;
+    margin-bottom: 8px;
+
+    font-size: 20px;
+}
+
+.strategy-card p {
+    color: var(--text);
+    margin: 8px 0;
+    line-height: 1.55;
+}
+
+.strategy-card p.strategy-meta {
+    margin-bottom: 14px;
+
+    color: var(--muted);
+    font-size: 14px;
+    font-weight: 700;
+    letter-spacing: 0.02em;
+    text-transform: uppercase;
+}
+
+.strategy-card a {
+    color: var(--primary);
+    font-weight: 700;
+}
+
+.strategy-card a:hover {
+    color: var(--primary-hover);
 }

@@ -1,0 +1,18 @@
+<div id="strategy-list">
+    {% for strategy in strategies %}
+        <article class="strategy-card">
+            <h3>{{ strategy.title }}</h3>
+            <p class="strategy-meta">
+                {{ strategy.get_category_display }}
+                {% if strategy.duration_minutes %} · {{ strategy.duration_minutes }} min{% endif %}
+                · Energy: {{ strategy.get_energy_level_display }}
+            </p>
+            <p>{{ strategy.description }}</p>
+            {% if strategy.resource_url %}
+                <p><a href="{{ strategy.resource_url }}" target="_blank" rel="noopener">Watch / read more</a></p>
+            {% endif %}
+        </article>
+    {% empty %}
+        <p>No strategies yet.</p>
+    {% endfor %}
+</div>
