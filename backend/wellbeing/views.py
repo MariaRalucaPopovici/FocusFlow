@@ -1,5 +1,7 @@
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, redirect
+from django.http import JsonResponse
+from django.db.models import Q
 
 from .forms import DailyCheckInForm
 from .models import Strategy
@@ -44,8 +46,34 @@ def daily_reset(request):
         form = DailyCheckInForm()
         
     return render(request, "wellbeing/daily_reset.html", {"form": form,})
-        
-    
 
+@login_required
+def strategy_library(request):
+    strategies = Strategy.objects.filter(active=True).order_by("category", "title")
+    return render(request, "wellbeing/strategy_library.html", {"strategies": strategies})
     
-    
+@login_required
+def strategy_search(request):
+    query = request.GET.get("q", "")
+
+    strategies = Strategy.objects.filter(active=True)
+    if query:
+        strategies = strategies.filter(
+            Q(title__icontains=query) | Q(description__icontains=query)
+        )
+
+    data = []
+    for s in strategies.order_by("category", "title"):
+        meta = s.get_category_display()
+        if s.duration_minutes:
+            meta += f" · {s.duration_minutes} min"
+        meta += f" · Energy: {s.get_energy_level_display()}"
+
+        data.append({
+            "title": s.title,
+            "meta": meta,
+            "description": s.description,
+            "resource_url": s.resource_url,
+        })
+
+    return JsonResponse({"strategies": data})
