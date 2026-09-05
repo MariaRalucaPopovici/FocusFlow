@@ -40,6 +40,7 @@ INSTALLED_APPS = [
     
     'tasks',
     'accounts',
+    "wellbeing",
 ]
 
 MIDDLEWARE = [

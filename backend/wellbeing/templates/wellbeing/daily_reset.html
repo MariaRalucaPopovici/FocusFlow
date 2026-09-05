@@ -1,0 +1,56 @@
+{% extends "base.html" %}
+
+{% block title %}
+Daily Reset | FocusFlow
+{% endblock %}
+
+{% block content %}
+
+<div class="page-heading">
+    <div>
+        <h2>Daily Reset</h2>
+        <p>Check in with yourself before deciding what today should look like.</p>
+    </div>
+</div>
+
+<form method="POST" class="task-form">
+    {% csrf_token %}
+
+    <div class="form-field">
+        <p class="field-label">How much capacity do you have today?</p>
+        <div class="choice-grid choice-grid-3">
+            {% for radio in form.energy %}
+                <label class="choice-card">
+                    {{ radio.tag }}
+                    <span>{{ radio.choice_label }} </span>
+                </label>
+            {% endfor %}
+        </div>
+        {{ form.mood.errors }}
+    </div>
+
+    <div class="form-field">
+        <p class="field-label">How are you feeling?</p>
+        <div class="choice-grid">
+            {% for radio in form.mood %}
+                <label class="choice-card">
+                    {{ radio.tag }}
+                    <span>{{ radio.choice_label }}</span>
+                </label>
+            {% endfor %}
+        </div>
+        {{ form.mood.errors }}
+    </div>
+
+    <div class="form-field">
+        {{ form.note.label_tag }}
+        {{ form.note }}
+        {{ form.note.errors }}
+    </div>
+
+    <div class="form-actions">
+        <button type="submit" class="button-primary">Save Daily Reset</button>
+    </div>
+</form>
+
+{% endblock %}

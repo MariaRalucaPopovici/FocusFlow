@@ -4,9 +4,9 @@
    ========================================================= */
 
 
-/* =========================
+/*  =========================
     1. THEME VARIABLES
-   ========================= */
+    ========================= */
 
 :root,
 [data-theme="notepad"] {
@@ -320,9 +320,9 @@
 }
 
 
-/* =========================
+/*  =========================
     2. GLOBAL ELEMENTS
-   ========================= */
+    ========================= */
 
 * {
     box-sizing: border-box;
@@ -354,9 +354,9 @@ body {
 }
 
 
-/* =========================
+/*  =========================
     3. HEADER / NAVIGATION
-   ========================= */
+    ========================= */
 
 header {
     background-color: var(--surface);
@@ -446,9 +446,9 @@ header nav a:hover,
 }
 
 
-/* =========================
+/*  =========================
     4. MAIN LAYOUT
-   ========================= */
+    ========================= */
 
 main {
     width: 90%;
@@ -494,9 +494,9 @@ main a:hover {
 }
 
 
-/* =========================
+/*  =========================
     5. FORMS
-   ========================= */
+    ========================= */
 
 form {
     max-width: 520px;
@@ -549,9 +549,9 @@ form select:focus {
 }
 
 
-/* =========================
+/*  =========================
     6. DEADLINE DATE + TIME
-   ========================= */
+    ========================= */
 
 .deadline-fields {
     display: grid;
@@ -580,9 +580,9 @@ form select:focus {
 }
 
 
-/* =========================
+/*  =========================
     7. CHECKBOX OPTIONS
-   ========================= */
+    ========================= */
 
 .task-options {
     margin: 20px 0 28px;
@@ -612,9 +612,9 @@ form select:focus {
 }
 
 
-/* =========================
+/*  =========================
     8. BUTTON SYSTEM
-   ========================= */
+    ========================= */
 
 button,
 .button-primary,
@@ -692,9 +692,9 @@ button,
 }
 
 
-/* =========================
+/*  =========================
     9. TASK CARDS
-   ========================= */
+    ========================= */
 
 .task-card {
     margin-bottom: 20px;
@@ -765,9 +765,9 @@ button,
 }
 
 
-/* =========================
+/*  =========================
     10. EMPTY STATE
-   ========================= */
+    ========================= */
 
 .empty-state {
     padding: 35px;
@@ -890,5 +890,125 @@ button,
 
     main h2 {
         font-size: 25px;
+    }
+}
+
+/*  ========================================
+    DAILY RESET
+    ======================================== */
+
+.field-label {
+    margin: 0 0 12px;
+    font-weight: 700;
+}
+
+.choice-grid {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 12px;
+}
+
+.choice-card {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    min-height: 54px;
+    padding: 12px 14px;
+
+    background-color: var(--surface);
+    color: var(--text);
+
+    border: 1px solid var(--border);
+    border-radius: 10px;
+
+    font-weight: 700;
+    text-align: center;
+    cursor: pointer;
+
+    transition:
+        background-color 0.15s ease,
+        border-color 0.15s ease,
+        transform 0.15s ease;
+}
+
+.choice-card:hover {
+    background-color: var(--surface-soft);
+    border-color: var(--primary);
+}
+
+.choice-card input {
+    position: absolute;
+    opacity: 0;
+    pointer-events: none;
+}
+
+.choice-card:has(input:checked) {
+    background-color: var(--surface-soft);
+    border-color: var(--primary);
+    color: var(--primary);
+}
+
+.choice-card:has(input:focus-visible) {
+    outline: 2px solid var(--focus);
+    outline-offset: 2px;
+}
+
+.reset-result {
+    max-width: 650px;
+    padding: 32px;
+
+    background-color: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 14px;
+
+    box-shadow: var(--shadow);
+}
+
+.result-label {
+    margin: 0 0 8px;
+
+    color: var(--primary);
+    font-size: 13px;
+    font-weight: 700;
+    letter-spacing: 1.5px;
+}
+
+.reset-result h2 {
+    margin: 0 0 12px;
+    font-size: 30px;
+}
+
+.result-message {
+    margin-bottom: 24px;
+
+    color: var(--muted);
+    font-size: 17px;
+    line-height: 1.6;
+}
+
+.result-summary {
+    padding: 16px 18px;
+    margin-bottom: 24px;
+
+    background-color: var(--surface-soft);
+    border-radius: 10px;
+}
+
+.result-summary p {
+    margin: 5px 0;
+}
+
+/* Daily Reset - responsive layout */
+
+@media (max-width: 700px) {
+
+    .choice-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    .choice-grid-3 {
+        grid-template-columns: 1fr;
     }
 }

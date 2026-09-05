@@ -1,0 +1,27 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<div class = "reset-result">
+    <p class="result-label">TODAY'S FOCUS</p>
+    <h2> {{ mode }}</h2>
+    <p class="result-message">{{ message }}</p>
+    <div class="result-summary">
+        <p><strong>Capacity </strong>{{ check_in.get_energy_display }}</p>
+        <p><strong>Mood     </strong>{{ check_in.get_mood_display }}</p>
+    </div>
+    {% if recommended_strategy %}
+        <div class="strategy-recommendation">
+            <p class="result-label">RECOMMENDED STRATEGY</p>
+            <h3>{{ recommended_strategy.title }}</h3>
+            <p>{{ recommended_strategy.description }}</p>
+            {% if recommended_strategy.duration_minutes %}
+            <p><strong>Time:</strong>{{ recommended_strategy.duration_minutes }} minutes</p>
+            {% endif %}
+        </div>
+        {% endif %}
+    <a href="{% url 'task_list' %}" class="button-primary">View My Tasks</a>
+</div>
+
+{% endblock %}
+

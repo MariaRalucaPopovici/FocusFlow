@@ -5,7 +5,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="{% static 'tasks/styles.css' %}?v=3">
+    <link rel="stylesheet" href="{% static 'tasks/styles.css' %}?v=4">
     <title>
         {% block title %}
         FocusFlow
@@ -45,6 +45,7 @@
         <nav>
             {% if user.is_authenticated %}
                 <a href="{% url 'task_list' %}">My Tasks</a>
+                <a href="{% url 'daily_reset' %}">Daily Reset</a>
 
                 <select id="theme-select" aria-label="Choose theme">
                     <option value="notepad">Old Notepad</option>
