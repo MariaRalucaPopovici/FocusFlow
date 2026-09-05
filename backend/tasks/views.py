@@ -2,6 +2,8 @@ from django.shortcuts import render, redirect, get_object_or_404
 from .forms import TaskForm
 from .models import Task
 from django.contrib.auth.decorators import login_required
+from rest_framework import generics, permissions
+from .serializers import TaskSerializer
 
 @login_required
 def task_list(request):
@@ -54,3 +56,13 @@ def delete_task(request, task_id):
         task.delete()
         return redirect("task_list")
     return render(request, "tasks/delete_task.html", {"task":task})
+
+class TaskListCreateAPI(generics.ListCreateAPIView):
+    serializer_class = TaskSerializer
+    permission_classes = [permissions.IsAuthenticated]
+
+    def get_queryset(self):
+        return Task.objects.filter(user=self.request.user).order_by("-created_at")
+
+    def perform_create(self, serializer):
+        serializer.save(user=self.request.user)
