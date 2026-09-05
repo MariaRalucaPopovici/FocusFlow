@@ -7,19 +7,15 @@ Register | FocusFlow
 {% block content %}
 <h1>Register</h1>
 
-{% if error %}
-    <p>{{ error }}</p>
-{% endif %}
-
 <form method="POST">
 
     {% csrf_token %}
 
     <label for="uname"><b>Username</b></label>
-    <input type="text" placeholder="Enter Username" name="uname" required>
+    <input type="text" placeholder="Enter Username" name="uname" value="{{ old_username }}" required>
 
     <label for="mail"><b>Email</b></label>
-    <input type="email" placeholder="Enter Email" name="mail" required>
+    <input type="email" placeholder="Enter Email" name="mail" value="{{ old_email }}" required>
 
     <label for="pass"><b>Password</b></label>
     <input type="password" placeholder="Enter Password" name="pass" required>
