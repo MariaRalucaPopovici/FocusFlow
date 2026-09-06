@@ -5,6 +5,7 @@ from tasks.views import TaskListCreateAPI, TaskDetailAPI
 urlpatterns = [
     path('admin/', admin.site.urls),
     path("accounts/", include("accounts.urls")),
+    path("accounts/", include("allauth.urls")),
     path("tasks/", include("tasks.urls")),
     path("wellbeing/", include("wellbeing.urls")),
     path("",include("tasks.urls")),

@@ -4,3 +4,5 @@ djangorestframework==3.18.0
 sqlparse==0.5.5
 requests
 python-dotenv
+django-allauth
+PyJWT

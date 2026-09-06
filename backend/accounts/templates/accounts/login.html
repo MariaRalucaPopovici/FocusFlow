@@ -1,4 +1,5 @@
 {% extends "base.html" %}
+{% load socialaccount %}
 
 {% block title %}
 Login | FocusFlow
@@ -6,20 +7,28 @@ Login | FocusFlow
 
 {% block content %}
 
-<form method="POST">
+<div class="auth-card">
+    <h2>Login</h2>
 
-{% csrf_token %}
+    <form method="POST">
+        {% csrf_token %}
 
-<div class="container">
-    <label><b>Username</b></label>
-    <input type="text" name="uname" required>
+        <div class="form-field">
+            <label><b>Username</b></label>
+            <input type="text" name="uname" required>
+        </div>
 
-    <label><b>Password</b></label>
-    <input type="password" name="psw" required>
+        <div class="form-field">
+            <label><b>Password</b></label>
+            <input type="password" name="psw" required>
+        </div>
 
-    <button type="submit">Login</button>
+        <button type="submit" class="button-primary">Login</button>
+    </form>
+
+    <div class="or-divider">or</div>
+
+    <a href="{% provider_login_url 'google' %}" class="button-secondary">Sign in with Google</a>
 </div>
-
-</form>
 
 {% endblock %}

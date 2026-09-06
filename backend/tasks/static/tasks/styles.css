@@ -1303,3 +1303,37 @@ button,
     color: var(--muted);
     font-size: 14px;
 }
+
+.auth-card {
+    max-width: 420px;
+    padding: 32px;
+    margin: 40px auto 0;
+
+    background-color: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 14px;
+
+    box-shadow: var(--shadow);
+}
+
+.auth-card form {
+    max-width: none;
+}
+
+.auth-card .button-primary {
+    width: 100%;
+}
+
+.or-divider {
+    margin: 20px 0;
+    text-align: center;
+
+    color: var(--muted);
+    font-size: 14px;
+    font-weight: 700;
+    text-transform: uppercase;
+}
+
+.auth-card .button-secondary {
+    width: 100%;
+}
