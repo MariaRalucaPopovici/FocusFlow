@@ -91,6 +91,9 @@ def daily_reset(request):
                 "Progress Mode": "progress",
             }
             mode_key = mode_key_map.get(mode)
+            
+            open_tasks = Task.objects.filter(user=request.user, completed=False)
+            has_urgent_important = open_tasks.filter(urgent=True, important=True).exists()
 
             matching_routines = Routine.objects.filter(active=True, mode=mode_key).filter(
                 Q(created_by__isnull=True) | Q(created_by=request.user)
@@ -104,12 +107,12 @@ def daily_reset(request):
             else:
                 matching_routines = matching_routines.exclude(routine_type="morning")
             
+            if has_urgent_important and check_in.energy == "low":
+                matching_routines = matching_routines.exclude(routine_type__in=["cleaning", "cooking"])
+                
             recommended_routine = matching_routines.first()
-            
             recommended_strategies = Strategy.objects.filter(active=True, energy_level__in=[check_in.energy, "any"]).order_by("category")[:3]
             
-            
-            open_tasks= Task.objects.filter(user=request.user, completed=False)
             ai_suggestion_text = AI_suggestion(check_in, open_tasks, matching_routines)
             ai_suggestion = []
             if ai_suggestion_text:
