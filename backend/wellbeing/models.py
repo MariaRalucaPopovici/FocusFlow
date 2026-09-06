@@ -57,6 +57,8 @@ class Strategy(models.Model):
         verbose_name_plural = "Strategies"
     
 class Routine(models.Model):
+    created_by = models.ForeignKey(User, on_delete=models.CASCADE, null=True, blank=True, related_name="routines")
+    
     MODE_CHOICES = [
         ("recovery", "Recovery"),
         ("low_energy", "Low Energy"),

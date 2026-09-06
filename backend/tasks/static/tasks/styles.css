@@ -755,6 +755,11 @@ button,
     color: var(--success);
 }
 
+.status-badge.mode {
+    background-color: var(--surface-soft);
+    color: var(--primary);
+}
+
 .task-actions {
     margin-top: 20px;
 
@@ -980,6 +985,75 @@ button,
     font-size: 30px;
 }
 
+.reset-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 24px;
+    flex-wrap: wrap;
+
+    max-width: 900px;
+    padding: 32px;
+    margin-bottom: 24px;
+
+    background-color: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 14px;
+
+    box-shadow: var(--shadow);
+}
+
+.result-pills {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-top: 16px;
+}
+
+.routine-mini {
+    flex-shrink: 0;
+    padding: 16px;
+    text-align: center;
+
+    background-color: var(--surface-soft);
+    border-radius: 10px;
+}
+
+.routine-mini h4 {
+    margin: 4px 0 12px;
+    font-size: 16px;
+}
+
+.full-width {
+    max-width: 900px;
+    margin-bottom: 24px;
+}
+
+.result-card {
+    padding: 24px;
+
+    display: flex;
+    flex-direction: column;
+
+    background-color: var(--surface);
+    border: 1px solid var(--border);
+    border-left: 5px solid var(--primary);
+    border-radius: 10px;
+
+    box-shadow: var(--shadow);
+}
+
+.result-card h3 {
+    margin-top: 0;
+    margin-bottom: 8px;
+    font-size: 20px;
+}
+
+.result-card .button-primary {
+    margin-top: 16px;
+    align-self: flex-start;
+}
+
 .result-message {
     margin-bottom: 24px;
 
@@ -998,10 +1072,6 @@ button,
 
 .result-summary p {
     margin: 5px 0;
-}
-
-.ai-suggestion {
-    margin-bottom: 24px;
 }
 
 .ai-suggestion ul {
@@ -1109,6 +1179,16 @@ button,
     box-shadow: var(--shadow);
 }
 
+.mini-strategy {
+    padding: 12px 0;
+    border-top: 1px solid var(--border);
+}
+
+.mini-strategy:first-child {
+    border-top: none;
+    padding-top: 0;
+}
+
 .strategy-card h3 {
     margin-top: 0;
     margin-bottom: 8px;
@@ -1139,4 +1219,87 @@ button,
 
 .strategy-card a:hover {
     color: var(--primary-hover);
+}
+
+.routine-card {
+    margin-bottom: 0;
+    padding: 24px;
+
+    background-color: var(--surface);
+
+    border: 1px solid var(--border);
+    border-left: 5px solid var(--primary);
+    border-radius: 10px;
+
+    box-shadow: var(--shadow);
+}
+
+.routine-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+    gap: 20px;
+}
+
+.routine-card h3 {
+    margin-top: 0;
+    margin-bottom: 8px;
+    font-size: 20px;
+}
+
+.routine-meta {
+    display: flex;
+    gap: 8px;
+    margin-bottom: 14px;
+}
+
+.routine-steps {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    counter-reset: step-counter;
+}
+
+.routine-steps li {
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+
+    padding: 12px 0;
+    border-top: 1px solid var(--border);
+}
+
+.routine-steps li:first-child {
+    border-top: none;
+}
+
+.routine-steps li::before {
+    content: counter(step-counter);
+    counter-increment: step-counter;
+
+    flex-shrink: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    width: 26px;
+    height: 26px;
+
+    background-color: var(--surface-soft);
+    color: var(--primary);
+    border-radius: 50%;
+
+    font-size: 13px;
+    font-weight: 700;
+}
+
+.step-duration {
+    color: var(--muted);
+    font-size: 14px;
+    font-weight: 400;
+}
+
+.routine-steps p {
+    margin: 4px 0 0;
+    color: var(--muted);
+    font-size: 14px;
 }

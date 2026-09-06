@@ -2,38 +2,55 @@
 
 {% block content %}
 
-<div class = "reset-result">
-    <p class="result-label">TODAY'S FOCUS</p>
-    <h2> {{ mode }}</h2>
-    <p class="result-message">{{ message }}</p>
-    <div class="result-summary">
-        <p><strong>Capacity </strong>{{ check_in.get_energy_display }}</p>
-        <p><strong>Mood     </strong>{{ check_in.get_mood_display }}</p>
+<div class="reset-header">
+    <div class="reset-header-main">
+        <p class="result-label">TODAY'S FOCUS</p>
+        <h2>{{ mode }}</h2>
+        <p class="result-message">{{ message }}</p>
+        <div class="result-pills">
+            <span class="status-badge">Capacity: {{ check_in.get_energy_display }}</span>
+            <span class="status-badge mode">Mood: {{ check_in.get_mood_display }}</span>
+        </div>
     </div>
 
-    {% if ai_suggestion %}
-        <div class="ai-suggestion">
-            <p class="result-label">AI SUGGESTION</p>
-            <ul>
-            {% for point in ai_suggestion %}
-                <li>{{ point }}</li>
-            {% endfor %}
-            </ul>
+    {% if recommended_routine %}
+        <div class="routine-mini">
+            <p class="result-label">RECOMMENDED ROUTINE</p>
+            <h4>{{ recommended_routine.title }}</h4>
+            <a href="{% url 'routine_list' %}?routine={{ recommended_routine.id }}" class="button-primary">View Routine</a>
         </div>
     {% endif %}
-
-    {% if recommended_strategy %}
-        <div class="strategy-recommendation">
-            <p class="result-label">RECOMMENDED STRATEGY</p>
-            <h3>{{ recommended_strategy.title }}</h3>
-            <p>{{ recommended_strategy.description }}</p>
-            {% if recommended_strategy.duration_minutes %}
-            <p><strong>Time: </strong>{{ recommended_strategy.duration_minutes }} minutes</p>
-            {% endif %}
-        </div>
-        {% endif %}
-    <a href="{% url 'task_list' %}" class="button-primary">View My Tasks</a>
 </div>
 
-{% endblock %}
+{% if ai_suggestion %}
+    <div class="result-card full-width ai-suggestion">
+        <p class="result-label">AI SUGGESTION</p>
+        <ul>
+        {% for point in ai_suggestion %}
+            <li>{{ point }}</li>
+        {% endfor %}
+        </ul>
+    </div>
+{% endif %}
 
+{% if recommended_strategies %}
+    <div class="result-card full-width">
+        <p class="result-label">RECOMMENDED STRATEGIES</p>
+        {% for strategy in recommended_strategies %}
+            <div class="mini-strategy">
+                <h3>{{ strategy.title }}</h3>
+                <p>{{ strategy.description }}</p>
+                {% if strategy.duration_minutes %}
+                <p><strong>Time:</strong> {{ strategy.duration_minutes }} minutes</p>
+                {% endif %}
+                {% if strategy.resource_url %}
+                <p><a href="{{ strategy.resource_url }}" target="_blank" rel="noopener">Watch / read more</a></p>
+                {% endif %}
+            </div>
+        {% endfor %}
+    </div>
+{% endif %}
+
+<a href="{% url 'task_list' %}" class="button-primary">View My Tasks</a>
+
+{% endblock %}

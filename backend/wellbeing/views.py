@@ -1,18 +1,20 @@
 import requests
 from django.contrib.auth.decorators import login_required
-from django.shortcuts import render
+from django.shortcuts import render ,redirect
 from django.db.models import Q
 from django.conf import settings
+from django.utils import timezone
 
-from .forms import DailyCheckInForm
-from .models import Strategy
+from .forms import DailyCheckInForm, RoutineForm
+from .models import Strategy, Routine, RoutineStep
 from tasks.models import Task
 
-def AI_suggestion(check_in, tasks):
+def AI_suggestion(check_in, tasks, routines):
     if not settings.GROQ_API_KEY:
         return None
     
     task_info = "\n".join(f" - {t.title} (urgent: {t.urgent}, important: {t.important})" for t in tasks) or "No open Tasks."
+    routine_info = "\n".join(f"- {r.title}: {r.description}" for r in routines) or "No matching routines right now."
     
     prompt = (
         "A neurodivergent student with ADHD just completed a daily check-in on their productivity app.\n"
@@ -20,11 +22,13 @@ def AI_suggestion(check_in, tasks):
         f"Mood: {check_in.get_mood_display()}\n"
         f"Note from them: {check_in.note or 'None'}\n\n"
         f"Open tasks in their list:\n{task_info}\n\n"
+        f"Routines available that match today's mode:\n{routine_info}\n\n"
         "You do not know how long each task actually takes, so do not invent specific time estimates or a multi-step schedule. "
         "Reply with 2 to 4 short bullet points, each on its own line starting with '- '. "
         "The first bullet should name the ONE task from the list they should start with first today, and briefly say why, given their energy and mood. "
         "The other bullets can offer short, practical, encouraging tips for getting started, without specifying minutes. "
-        "Plain text only, no headings, no markdown formatting other than the leading '- ' on each line."
+        "If one of the available routines would genuinely help them today, mention it by name in one of the bullets. "
+        "Plain text only. Do not use asterisks, bold, italics, headings, or any markdown formatting other than the leading '- ' on each line."
     )
     
     try:
@@ -78,19 +82,44 @@ def daily_reset(request):
                 else:
                     mode = "Balanced Mode"
                     message = "You have good capacity today. Make progress while keeping your workload realistic."
+            
+            mode_key_map = {
+                "Recovery Mode": "recovery",
+                "Low-Energy Mode": "low_energy",
+                "Steady Mode": "steady",
+                "Balanced Mode": "balanced",
+                "Progress Mode": "progress",
+            }
+            mode_key = mode_key_map.get(mode)
 
-            recommended_strategy = Strategy.objects.filter(active=True, energy_level__in=[check_in.energy, "any"]).first()
+            matching_routines = Routine.objects.filter(active=True, mode=mode_key).filter(
+                Q(created_by__isnull=True) | Q(created_by=request.user)
+            )
+
+            current_hour = timezone.now().hour
+            if 5 <= current_hour < 12:
+                matching_routines = matching_routines.exclude(routine_type="evening")
+            elif 12 <= current_hour < 18:
+                matching_routines = matching_routines.exclude(routine_type__in=["morning", "evening"])
+            else:
+                matching_routines = matching_routines.exclude(routine_type="morning")
+            
+            recommended_routine = matching_routines.first()
+            
+            recommended_strategies = Strategy.objects.filter(active=True, energy_level__in=[check_in.energy, "any"]).order_by("category")[:3]
+            
             
             open_tasks= Task.objects.filter(user=request.user, completed=False)
-            ai_suggestion_text = AI_suggestion(check_in, open_tasks)
+            ai_suggestion_text = AI_suggestion(check_in, open_tasks, matching_routines)
             ai_suggestion = []
             if ai_suggestion_text:
                 for line in ai_suggestion_text.split("\n"):
                     line = line.strip().lstrip("-").strip()
+                    line = line.replace("*", "")
                     if line:
                         ai_suggestion.append(line)            
             
-            return render(request, "wellbeing/daily_reset_result.html", {"check_in": check_in, "mode": mode, "message": message, "recommended_strategy": recommended_strategy, "ai_suggestion": ai_suggestion,})
+            return render(request, "wellbeing/daily_reset_result.html", {"check_in": check_in, "mode": mode, "message": message, "recommended_strategies": recommended_strategies, "ai_suggestion": ai_suggestion, "recommended_routine": recommended_routine,})
 
     else:
         form = DailyCheckInForm()
@@ -114,3 +143,30 @@ def strategy_search(request):
 
     return render(request, "wellbeing/_strategy_cards.html", {"strategies": strategies})
 
+@login_required
+def routine_list(request):
+    routines = Routine.objects.filter(active=True).filter(
+        Q(created_by__isnull=True) | Q(created_by=request.user)
+    ).prefetch_related("steps").order_by("routine_type", "title")
+    routine_id = request.GET.get("routine")
+    if routine_id:
+        routines = routines.filter(id=routine_id)
+    return render(request, "wellbeing/routine_list.html", {"routines": routines})
+
+@login_required
+def add_routine(request):
+    if request.method == "POST":
+        form = RoutineForm(request.POST)
+        if form.is_valid():
+            routine = form.save(commit=False)
+            routine.created_by = request.user
+            routine.save()
+            steps_text = form.cleaned_data.get("steps_text", "")
+            for index, line in enumerate(steps_text.splitlines(), start=1):
+                line = line.strip()
+                if line:
+                    RoutineStep.objects.create(routine=routine, title=line, order=index)
+            return redirect("routine_list")
+    else:
+        form = RoutineForm()
+    return render(request, "wellbeing/add_routine.html", {"form": form})

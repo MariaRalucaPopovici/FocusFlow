@@ -1,0 +1,50 @@
+{% extends "base.html" %}
+
+{% block title %}
+Add Routine | FocusFlow
+{% endblock %}
+
+{% block content %}
+
+<h2>Add Routine</h2>
+
+<form method="POST" class="task-form">
+    {% csrf_token %}
+
+    <div class="form-field">
+        {{ form.title.label_tag }}
+        {{ form.title }}
+        {{ form.title.errors }}
+    </div>
+
+    <div class="form-field">
+        {{ form.description.label_tag }}
+        {{ form.description }}
+        {{ form.description.errors }}
+    </div>
+
+    <div class="form-field">
+        {{ form.mode.label_tag }}
+        {{ form.mode }}
+        {{ form.mode.errors }}
+    </div>
+
+    <div class="form-field">
+        {{ form.routine_type.label_tag }}
+        {{ form.routine_type }}
+        {{ form.routine_type.errors }}
+    </div>
+
+    <div class="form-field">
+        {{ form.steps_text.label_tag }}
+        {{ form.steps_text }}
+        {{ form.steps_text.errors }}
+    </div>
+
+    <div class="form-actions">
+        <button type="submit" class="button-primary">Save Routine</button>
+        <a href="{% url 'routine_list' %}" class="button-secondary">Back to Routines</a>
+    </div>
+</form>
+
+{% endblock %}

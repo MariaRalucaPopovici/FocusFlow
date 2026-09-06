@@ -47,6 +47,7 @@
                 <a href="{% url 'task_list' %}">My Tasks</a>
                 <a href="{% url 'daily_reset' %}">Daily Reset</a>
                 <a href="{% url 'strategy_library' %}">Strategies</a>
+                <a href="{% url 'routine_list' %}">Routines</a>
 
                 <select id="theme-select" aria-label="Choose theme">
                     <option value="notepad">Old Notepad</option>
@@ -62,7 +63,7 @@
 
                 <form method="POST" action="{% url 'logout' %}" class="logout-form">
                     {% csrf_token %}
-                    <button type="submit">Logout</button>
+                    <button type="submit" class="button-secondary">Logout</button>
                 </form>
             {% else %}
                 <a href="{% url 'login' %}">Login</a>
