@@ -68,6 +68,16 @@ MIDDLEWARE = [
     'allauth.account.middleware.AccountMiddleware',
 ]
 
+# Django REST Framework: accept either the normal browser session (so the
+# existing site keeps working) OR a JWT access token in the Authorization
+# header (Authorization: Bearer <token>) for API clients.
+REST_FRAMEWORK = {
+    "DEFAULT_AUTHENTICATION_CLASSES": (
+        "rest_framework.authentication.SessionAuthentication",
+        "rest_framework_simplejwt.authentication.JWTAuthentication",
+    ),
+}
+
 ROOT_URLCONF = 'config.urls'
 
 TEMPLATES = [

@@ -9,8 +9,9 @@ from .serializers import TaskSerializer
 def task_list(request):
     
     tasks = Task.objects.filter(user=request.user)
+    last_reset_mode = request.COOKIES.get("last_reset_mode")
     
-    return render(request, "tasks/task_list.html", {"tasks":tasks})
+    return render(request, "tasks/task_list.html", {"tasks": tasks, "last_reset_mode": last_reset_mode})
 
 @login_required
 def add_task(request):

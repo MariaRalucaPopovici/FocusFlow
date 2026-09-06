@@ -10,6 +10,9 @@ My tasks | FocusFlow
     <div>
         <h2>My Tasks</h2>
         <p>Manage what needs your attention.</p>
+        {% if last_reset_mode %}
+            <span class="status-badge mode">Last reset: {{ last_reset_mode }}</span>
+        {% endif %}
     </div>
     
     <a href="{% url 'add_task' %}" class="button-primary"> + Add Task</a>

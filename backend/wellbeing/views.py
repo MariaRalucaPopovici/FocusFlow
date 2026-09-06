@@ -118,9 +118,9 @@ def daily_reset(request):
                     line = line.replace("*", "")
                     if line:
                         ai_suggestion.append(line)            
-            
-            return render(request, "wellbeing/daily_reset_result.html", {"check_in": check_in, "mode": mode, "message": message, "recommended_strategies": recommended_strategies, "ai_suggestion": ai_suggestion, "recommended_routine": recommended_routine,})
-
+            response = render(request, "wellbeing/daily_reset_result.html", {"check_in": check_in, "mode": mode, "message": message, "recommended_strategies": recommended_strategies, "ai_suggestion": ai_suggestion, "recommended_routine": recommended_routine,})
+            response.set_cookie("last_reset_mode", mode, max_age=60 * 60 * 24 * 7)
+            return response
     else:
         form = DailyCheckInForm()
         

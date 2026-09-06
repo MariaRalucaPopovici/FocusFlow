@@ -6,3 +6,4 @@ requests
 python-dotenv
 django-allauth
 PyJWT
+djangorestframework-simplejwt
