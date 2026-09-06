@@ -10,13 +10,25 @@
         <p><strong>Capacity </strong>{{ check_in.get_energy_display }}</p>
         <p><strong>Mood     </strong>{{ check_in.get_mood_display }}</p>
     </div>
+
+    {% if ai_suggestion %}
+        <div class="ai-suggestion">
+            <p class="result-label">AI SUGGESTION</p>
+            <ul>
+            {% for point in ai_suggestion %}
+                <li>{{ point }}</li>
+            {% endfor %}
+            </ul>
+        </div>
+    {% endif %}
+
     {% if recommended_strategy %}
         <div class="strategy-recommendation">
             <p class="result-label">RECOMMENDED STRATEGY</p>
             <h3>{{ recommended_strategy.title }}</h3>
             <p>{{ recommended_strategy.description }}</p>
             {% if recommended_strategy.duration_minutes %}
-            <p><strong>Time:</strong>{{ recommended_strategy.duration_minutes }} minutes</p>
+            <p><strong>Time: </strong>{{ recommended_strategy.duration_minutes }} minutes</p>
             {% endif %}
         </div>
         {% endif %}

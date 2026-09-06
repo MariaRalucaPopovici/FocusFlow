@@ -1000,6 +1000,61 @@ button,
     margin: 5px 0;
 }
 
+.ai-suggestion {
+    margin-bottom: 24px;
+}
+
+.ai-suggestion ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+
+.ai-suggestion li {
+    position: relative;
+    padding-left: 44px;
+    margin-bottom: 10px;
+
+    color: var(--text);
+    line-height: 1.5;
+}
+
+.ai-suggestion li::before {
+    content: "✨";
+    position: absolute;
+    left: 0;
+    top: 0;
+    font-size: 28px;
+}
+
+[data-theme="autumn"] .ai-suggestion li::before {
+    content: "🍂";
+}
+
+[data-theme="winter"] .ai-suggestion li::before {
+    content: "❄️";
+}
+
+[data-theme="christmas"] .ai-suggestion li::before {
+    content: "🎄";
+}
+
+[data-theme="spring"] .ai-suggestion li::before {
+    content: "🌸";
+}
+
+[data-theme="easter"] .ai-suggestion li::before {
+    content: "🐣";
+}
+
+[data-theme="summer"] .ai-suggestion li::before {
+    content: "☀️";
+}
+
+[data-theme="midnight"] .ai-suggestion li::before {
+    content: "🌙";
+}
+
 /*  =========================
     14. STRATEGY LIBRARY
     ========================= */
