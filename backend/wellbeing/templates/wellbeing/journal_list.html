@@ -1,0 +1,40 @@
+{% extends "base.html" %}
+
+{% block title %}
+Brain Dump | FocusFlow
+{% endblock %}
+
+{% block content %}
+
+<div class="page-heading">
+    <div>
+        <h2>Brain Dump</h2>
+        <p>A private space to get thoughts out of your head.</p>
+    </div>
+</div>
+
+<form method="POST" class="task-form">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit" class="button-primary">Save Entry</button>
+</form>
+
+<div class="journal-entries">
+    {% for entry in entries %}
+        <div class="journal-entry-card">
+            <p class="muted-text">{{ entry.created_at|date:"D, N j, Y - g:i A" }}</p>
+            <p class="journal-entry-content">{{ entry.content|linebreaks }}</p>
+            <div class="task-actions">
+                <a href="{% url 'edit_journal_entry' entry.id %}" class="button-secondary">Edit</a>
+                <a href="{% url 'delete_journal_entry' entry.id %}" class="button-secondary">Delete</a>
+            </div>
+        </div>
+    {% empty %}
+        <div class="empty-state">
+            <h3>No entries yet</h3>
+            <p>Write your first entry above.</p>
+        </div>
+    {% endfor %}
+</div>
+
+{% endblock %}

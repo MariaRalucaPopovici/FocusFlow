@@ -6,8 +6,8 @@ from django.db.models import Q
 from django.conf import settings
 from django.utils import timezone
 
-from .forms import DailyCheckInForm, RoutineForm
-from .models import Strategy, Routine, RoutineStep, DopamineMenuItem
+from .forms import DailyCheckInForm, RoutineForm, JournalEntryForm
+from .models import Strategy, Routine, RoutineStep, DopamineMenuItem, JournalEntry
 from tasks.models import Task
 
 def AI_suggestion(check_in, tasks, routines):
@@ -239,3 +239,38 @@ def delete_routine(request, routine_id):
         routine.delete()
         return redirect("routine_list")
     return render(request, "wellbeing/delete_routine.html", {"routine": routine})
+
+@login_required
+def journal_list(request):
+    if request.method == "POST":
+        form = JournalEntryForm(request.POST)
+        if form.is_valid():
+            entry = form.save(commit=False)
+            entry.user = request.user
+            entry.save()
+            return redirect("journal_list")
+    else:
+        form = JournalEntryForm()
+
+    entries = JournalEntry.objects.filter(user=request.user)
+    return render(request, "wellbeing/journal_list.html", {"form": form, "entries": entries})
+
+@login_required
+def edit_journal_entry(request, entry_id):
+    entry = get_object_or_404(JournalEntry, id=entry_id, user=request.user)
+    if request.method == "POST":
+        form = JournalEntryForm(request.POST, instance=entry)
+        if form.is_valid():
+            form.save()
+            return redirect("journal_list")
+    else:
+        form = JournalEntryForm(instance=entry)
+    return render(request, "wellbeing/edit_journal_entry.html", {"form": form, "entry": entry})
+
+@login_required
+def delete_journal_entry(request, entry_id):
+    entry = get_object_or_404(JournalEntry, id=entry_id, user=request.user)
+    if request.method == "POST":
+        entry.delete()
+        return redirect("journal_list")
+    return render(request, "wellbeing/delete_journal_entry.html", {"entry": entry})

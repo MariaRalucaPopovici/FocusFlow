@@ -1,5 +1,5 @@
 from django import forms
-from .models import DailyCheckIn, Routine
+from .models import DailyCheckIn, Routine, JournalEntry
 
 
 class DailyCheckInForm(forms.ModelForm):
@@ -41,3 +41,14 @@ class RoutineForm(forms.ModelForm):
     class Meta:
         model = Routine
         fields = ["title", "description", "mode", "routine_type"]
+        
+class JournalEntryForm(forms.ModelForm):
+    class Meta:
+        model = JournalEntry
+        fields = ["content"]
+        labels = {
+            "content": "What's on your mind?",
+        }
+        widgets = {
+            "content": forms.Textarea(attrs={"rows": 6, "placeholder": "Write freely - thoughts, worries, wins, anything..."}),
+        }

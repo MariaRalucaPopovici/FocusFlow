@@ -1565,3 +1565,22 @@ button,
     background: var(--surface);
     color: var(--text);
 }
+
+.journal-entries {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    margin-top: 24px;
+}
+
+.journal-entry-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 20px;
+    box-shadow: var(--shadow);
+}
+
+.journal-entry-content {
+    margin: 8px 0 12px 0;
+}
