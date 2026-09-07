@@ -8,4 +8,9 @@ urlpatterns = [
     path("strategies/search/", views.strategy_search, name="strategy_search"),
     path("routines/", views.routine_list, name="routine_list"),
     path("routines/add/", views.add_routine, name="add_routine"),
+    path("routines/search/", views.routine_search, name="routine_search"),
+    path("routines/<int:routine_id>/edit/", views.edit_routine, name="edit_routine"),
+    path("routines/<int:routine_id>/delete/", views.delete_routine, name="delete_routine"),
+    path("dashboard/", views.dashboard, name="dashboard"),
+    path("dopamine-menu/", views.dopamine_menu, name="dopamine_menu"),
 ]

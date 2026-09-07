@@ -1,0 +1,50 @@
+{% for task in tasks %}
+
+<div class="task-card">
+
+    <h3>{{ task.title}}</h3>
+
+    {% if task.description %}
+        <p> {{ task.description }} </p>
+    {% endif %}
+
+    {% if task.deadline %}
+        <p><strong>Deadline:</strong> {{ task.deadline }} </p>
+    {% endif %}
+
+    <div class="task-status">
+        {% if task.urgent %}
+            <span class="status-badge urgent">Urgent</span>
+        {% endif %}
+
+        {% if task.important %}
+            <span class="status-badge important">Important</span>
+        {% endif %}
+
+        {% if task.completed %}
+            <span class="status-badge completed">Completed</span>
+        {% endif %}
+    </div>
+
+    <div class="task-actions">
+        <a href="{% url 'edit_task' task.id %}" class="button-secondary">Edit</a>
+        <a href="{% url 'toggle_complete' task.id %}" class="button-secondary">
+            {% if task.completed %}
+                Mark Incomplete
+            {% else %}
+                Mark Complete
+            {% endif %}
+        </a>
+        <a href="{% url 'delete_task' task.id %}" class="button-secondary">Delete</a>
+    </div>
+</div>
+
+{% empty %}
+
+<div class="empty-state">
+    <h3>No tasks yet</h3>
+    <p>Add your first task to get started</p>
+    <a href="{% url 'add_task' %}" class="button-primary">Add Task</a>
+</div>
+
+{% endfor %}

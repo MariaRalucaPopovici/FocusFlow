@@ -1,0 +1,76 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}
+Dashboard | FocusFlow
+{% endblock %}
+
+{% block content %}
+
+<div class="page-heading">
+    <div>
+        <h2>Welcome back, {{ user.username }}</h2>
+        <p>{% now "l, F j" %}</p>
+        {% if last_reset_mode %}
+            <span class="status-badge mode dashboard-heading-badge">Last reset: {{ last_reset_mode }}</span>
+        {% endif %}
+    </div>
+    <a href="{% url 'daily_reset' %}" class="button-primary">Do Daily Reset</a>
+</div>
+
+<div class="dashboard-layout">
+
+    <div class="dashboard-main-card">
+        <div class="dashboard-card-header">
+            <span class="card-icon">📋</span>
+            <p class="result-label">TODAY'S TASKS</p>
+        </div>
+
+        {% for task in tasks %}
+            <div class="dashboard-task-row">
+                <a href="{% url 'toggle_complete' task.id %}" class="task-tick" aria-label="Mark complete"></a>
+                <div class="dashboard-task-info">
+                    <span>{{ task.title }}</span>
+                    {% if task.urgent %}<span class="status-badge urgent status-badge-mini">Urgent</span>{% endif %}
+                    {% if task.important %}<span class="status-badge important status-badge-mini">Important</span>{% endif %}
+                </div>
+                {% if task.deadline %}
+                    <span class="muted-text">{{ task.deadline }}</span>
+                {% endif %}
+            </div>
+        {% empty %}
+            <p>No open tasks right now. Nice work.</p>
+        {% endfor %}
+
+        <div class="dashboard-task-buttons">
+            <a href="{% url 'add_task' %}?next={% url 'dashboard' %}" class="button-primary dashboard-view-all-btn">+ Add Task</a>
+            <a href="{% url 'task_list' %}" class="button-secondary dashboard-view-all-btn">View All Tasks</a>
+        </div>
+    </div>
+
+    <div class="dashboard-sidebar">
+
+        <div class="dashboard-card">
+            <div class="dashboard-card-header">
+                <span class="card-icon">🍬</span>
+                <p class="result-label">DOPAMINE MENU</p>
+            </div>
+
+            {% if dopamine_suggestion %}
+                <p class="dopamine-category-label">{{ dopamine_suggestion.get_category_display }}</p>
+                <p class="dopamine-suggestion-title">{{ dopamine_suggestion.title }}</p>
+                <a href="{% url 'dashboard' %}" class="button-secondary dopamine-shuffle-btn">Try another suggestion</a>
+            {% else %}
+                <p>No menu items yet.</p>
+            {% endif %}
+
+            <a href="{% url 'dopamine_menu' %}" class="button-secondary dashboard-view-all-btn">View Full Menu</a>
+        </div>
+
+    </div>
+
+</div>
+
+<script src="{% static 'js/dashboard.js' %}" defer></script>
+
+{% endblock %}

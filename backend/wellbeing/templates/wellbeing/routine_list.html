@@ -1,4 +1,5 @@
 {% extends "base.html" %}
+{% load static %}
 
 {% block title %}
 Routines | FocusFlow
@@ -15,30 +16,13 @@ Routines | FocusFlow
     <a href="{% url 'add_routine' %}" class="button-primary"> + Add Routine</a>
 </div>
 
-<div class="routine-grid">
-{% for routine in routines %}
-    <article class="routine-card">
-        <h3>{{ routine.title }}</h3>
-        <div class="routine-meta">
-    <span class="status-badge">{{ routine.get_routine_type_display }}</span>
-    <span class="status-badge mode">{{ routine.get_mode_display }}</span>
+<input type="search" id="routine-search" class="search-input" placeholder="Search routines..." autocomplete="off"
+    data-search-url="{% url 'routine_search' %}">
+
+<div id="routine-list" class="routine-grid">
+    {% include "wellbeing/_routine_cards.html" %}
 </div>
-        {% if routine.description %}<p>{{ routine.description }}</p>{% endif %}
-        <ol class="routine-steps">
-            {% for step in routine.steps.all %}
-                <li>
-                    <div class="step-text">
-                        <strong>{{ step.title }}</strong>
-                        {% if step.duration_minutes %} <span class="step-duration">({{ step.duration_minutes }} min)</span>{% endif %}
-                        {% if step.description %}<p>{{ step.description }}</p>{% endif %}
-                    </div>
-                </li>
-            {% endfor %}
-        </ol>
-    </article>
-{% empty %}
-    <p>No routines yet.</p>
-{% endfor %}
-</div>
+
+<script src="{% static 'wellbeing/routine_search.js' %}" defer></script>
 
 {% endblock %}

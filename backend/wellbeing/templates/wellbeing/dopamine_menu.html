@@ -1,0 +1,34 @@
+{% extends "base.html" %}
+
+{% block title %}
+Dopamine Menu | FocusFlow
+{% endblock %}
+
+{% block content %}
+
+<div class="page-heading">
+    <div>
+        <h2>Dopamine Menu</h2>
+        <p>Pick something that fits how much time and energy you have right now.</p>
+    </div>
+</div>
+
+<div class="dopamine-menu-grid">
+    {% for group in grouped %}
+        <div class="dopamine-category">
+            <h3>{{ group.label }}</h3>
+            <ul>
+                {% for item in group.items %}
+                    <li>{{ item.title }}</li>
+                {% endfor %}
+            </ul>
+        </div>
+    {% empty %}
+        <div class="empty-state">
+            <h3>No menu items yet</h3>
+            <p>Ask an admin to add some, or check back later.</p>
+        </div>
+    {% endfor %}
+</div>
+
+{% endblock %}

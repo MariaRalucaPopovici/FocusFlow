@@ -44,6 +44,11 @@ class Strategy(models.Model):
     
     title = models.CharField(max_length=100)
     description = models.TextField()
+    short_tip = models.CharField(
+        max_length=150,
+        blank=True,
+        help_text="A short, one-line version of this strategy, used for the pop-up tip. Leave blank to fall back to a trimmed description.",
+    )
     category = models.CharField(max_length=20, choices=CATEGORY_CHOICES)
     energy_level = models.CharField(max_length=20, choices=ENERGY_CHOICES, default="any")
     duration_minutes = models.PositiveIntegerField(null=True, blank=True)
@@ -97,3 +102,20 @@ class RoutineStep(models.Model):
     
     class Meta:
         ordering = ["order"]
+
+class DopamineMenuItem(models.Model):
+    CATEGORY_CHOICES = [
+        ("starters", "Starters (10-15 minutes)"),
+        ("mains", "Mains (about an hour)"),
+        ("sides", "Sides (alongside something else)"),
+        ("desserts", "Desserts (good in moderation)"),
+        ("specials", "Specials (rare treats)"),
+        ("salads", "Salads (good for you, harder to start)"),
+    ]
+
+    title = models.CharField(max_length=100)
+    category = models.CharField(max_length=20, choices=CATEGORY_CHOICES)
+    active = models.BooleanField(default=True)
+
+    def __str__(self):
+        return self.title

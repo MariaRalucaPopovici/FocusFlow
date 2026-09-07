@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import DailyCheckIn, Strategy, Routine, RoutineStep
+from .models import DailyCheckIn, Strategy, Routine, RoutineStep, DopamineMenuItem
 
 @admin.register(DailyCheckIn)
 class DailyCheckInAdmin(admin.ModelAdmin):
@@ -75,3 +75,15 @@ class RoutineStepAdmin(admin.ModelAdmin):
         "strategy",
     )
 
+@admin.register(DopamineMenuItem)
+class DopamineMenuItemAdmin(admin.ModelAdmin):
+    list_display = (
+        "title",
+        "category",
+        "active",
+    )
+
+    list_filter = (
+        "category",
+        "active",
+    )

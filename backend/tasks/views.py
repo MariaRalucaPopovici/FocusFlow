@@ -2,6 +2,7 @@ from django.shortcuts import render, redirect, get_object_or_404
 from .forms import TaskForm
 from .models import Task
 from django.contrib.auth.decorators import login_required
+from django.db.models import Q
 from rest_framework import generics, permissions
 from .serializers import TaskSerializer
 
@@ -14,14 +15,26 @@ def task_list(request):
     return render(request, "tasks/task_list.html", {"tasks": tasks, "last_reset_mode": last_reset_mode})
 
 @login_required
+def task_search(request):
+    query = request.GET.get("q", "")
+    tasks = Task.objects.filter(user=request.user)
+    if query:
+        tasks = tasks.filter(
+            Q(title__icontains=query) | Q(description__icontains=query)
+        )
+    return render(request, "tasks/_task_cards.html", {"tasks": tasks})
+
+@login_required
 def add_task(request):
-    
     if request.method == "POST":
         form = TaskForm(request.POST)
         if form.is_valid():
             task = form.save(commit=False)
             task.user = request.user
             task.save()
+            next_url = request.POST.get("next")
+            if next_url:
+                return redirect(next_url)
             return redirect("task_list")
     else:
         form = TaskForm()
@@ -74,3 +87,4 @@ class TaskDetailAPI(generics.RetrieveUpdateDestroyAPIView):
     
     def get_queryset(self):
         return Task.objects.filter(user=self.request.user)
+    

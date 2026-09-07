@@ -10,6 +10,7 @@ Add Task | FocusFlow
 
 <form method="POST" class="task-form">
     {% csrf_token %}
+    <input type="hidden" name="next" value="{{ request.GET.next }}">
 
     <div class="form-field">
         {{ form.title.label_tag }}
@@ -43,7 +44,7 @@ Add Task | FocusFlow
 
     <div class="form-actions">
         <button type="submit" class="button-primary">Save Task</button>
-        <a href="{% url 'task_list' %}" class="button-secondary">Back to Tasks</a>
+        <a href="{{ request.GET.next|default:'/tasks/' }}" class="button-secondary">Cancel</a>
     </div>  
 </form>
 

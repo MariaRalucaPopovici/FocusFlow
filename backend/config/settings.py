@@ -48,7 +48,7 @@ INSTALLED_APPS = [
 
 SITE_ID = 1
 
-LOGIN_REDIRECT_URL = "task_list"
+LOGIN_REDIRECT_URL = "dashboard"
 
 SOCIALACCOUNT_LOGIN_ON_GET = True
 
@@ -90,6 +90,7 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
+                'wellbeing.context_processors.daily_tip',
             ],
         },
     },

@@ -1,12 +1,13 @@
+import random
 import requests
 from django.contrib.auth.decorators import login_required
-from django.shortcuts import render ,redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from django.db.models import Q
 from django.conf import settings
 from django.utils import timezone
 
 from .forms import DailyCheckInForm, RoutineForm
-from .models import Strategy, Routine, RoutineStep
+from .models import Strategy, Routine, RoutineStep, DopamineMenuItem
 from tasks.models import Task
 
 def AI_suggestion(check_in, tasks, routines):
@@ -52,10 +53,8 @@ def AI_suggestion(check_in, tasks, routines):
 
 @login_required
 def daily_reset(request):
-
     if request.method == "POST":
         form = DailyCheckInForm(request.POST)
-
         if form.is_valid():
             check_in = form.save(commit=False)
             check_in.user = request.user
@@ -91,7 +90,7 @@ def daily_reset(request):
                 "Progress Mode": "progress",
             }
             mode_key = mode_key_map.get(mode)
-            
+
             open_tasks = Task.objects.filter(user=request.user, completed=False)
             has_urgent_important = open_tasks.filter(urgent=True, important=True).exists()
 
@@ -106,11 +105,12 @@ def daily_reset(request):
                 matching_routines = matching_routines.exclude(routine_type__in=["morning", "evening"])
             else:
                 matching_routines = matching_routines.exclude(routine_type="morning")
-            
+
             if has_urgent_important and check_in.energy == "low":
                 matching_routines = matching_routines.exclude(routine_type__in=["cleaning", "cooking"])
-                
+
             recommended_routine = matching_routines.first()
+            
             recommended_strategies = Strategy.objects.filter(active=True, energy_level__in=[check_in.energy, "any"]).order_by("category")[:3]
             
             ai_suggestion_text = AI_suggestion(check_in, open_tasks, matching_routines)
@@ -121,12 +121,12 @@ def daily_reset(request):
                     line = line.replace("*", "")
                     if line:
                         ai_suggestion.append(line)            
+            
             response = render(request, "wellbeing/daily_reset_result.html", {"check_in": check_in, "mode": mode, "message": message, "recommended_strategies": recommended_strategies, "ai_suggestion": ai_suggestion, "recommended_routine": recommended_routine,})
             response.set_cookie("last_reset_mode", mode, max_age=60 * 60 * 24 * 7)
             return response
     else:
         form = DailyCheckInForm()
-        
     return render(request, "wellbeing/daily_reset.html", {"form": form,})
 
 @login_required
@@ -137,13 +137,11 @@ def strategy_library(request):
 @login_required
 def strategy_search(request):
     query = request.GET.get("q", "")
-
     strategies = Strategy.objects.filter(active=True)
     if query:
         strategies = strategies.filter(
             Q(title__icontains=query) | Q(description__icontains=query)
         )
-
     return render(request, "wellbeing/_strategy_cards.html", {"strategies": strategies})
 
 @login_required
@@ -155,6 +153,19 @@ def routine_list(request):
     if routine_id:
         routines = routines.filter(id=routine_id)
     return render(request, "wellbeing/routine_list.html", {"routines": routines})
+
+@login_required
+def routine_search(request):
+    query = request.GET.get("q", "")
+    routines = Routine.objects.filter(active=True).filter(
+        Q(created_by__isnull=True) | Q(created_by=request.user)
+    ).prefetch_related("steps")
+    if query:
+        routines = routines.filter(
+            Q(title__icontains=query) | Q(description__icontains=query)
+        )
+    routines = routines.order_by("routine_type", "title")
+    return render(request, "wellbeing/_routine_cards.html", {"routines": routines})
 
 @login_required
 def add_routine(request):
@@ -173,3 +184,58 @@ def add_routine(request):
     else:
         form = RoutineForm()
     return render(request, "wellbeing/add_routine.html", {"form": form})
+
+@login_required
+def dashboard(request):
+    tasks = Task.objects.filter(user=request.user, completed=False).order_by("deadline")[:5]
+    last_reset_mode = request.COOKIES.get("last_reset_mode")
+
+    dopamine_items = list(DopamineMenuItem.objects.filter(active=True))
+    dopamine_suggestion = random.choice(dopamine_items) if dopamine_items else None
+
+    return render(request, "wellbeing/dashboard.html", {
+        "tasks": tasks,
+        "last_reset_mode": last_reset_mode,
+        "dopamine_suggestion": dopamine_suggestion,
+    })
+
+@login_required
+def dopamine_menu(request):
+    items = DopamineMenuItem.objects.filter(active=True)
+
+    grouped = []
+    for key, label in DopamineMenuItem.CATEGORY_CHOICES:
+        category_items = items.filter(category=key)
+        if category_items.exists():
+            grouped.append({"label": label, "items": category_items})
+
+    return render(request, "wellbeing/dopamine_menu.html", {"grouped": grouped})
+
+@login_required
+def edit_routine(request, routine_id):
+    routine = get_object_or_404(Routine, id=routine_id, created_by=request.user)
+
+    if request.method == "POST":
+        form = RoutineForm(request.POST, instance=routine)
+        if form.is_valid():
+            form.save()
+            routine.steps.all().delete()
+            steps_text = form.cleaned_data.get("steps_text", "")
+            for index, line in enumerate(steps_text.splitlines(), start=1):
+                line = line.strip()
+                if line:
+                    RoutineStep.objects.create(routine=routine, title=line, order=index)
+            return redirect("routine_list")
+    else:
+        existing_steps = "\n".join(step.title for step in routine.steps.all())
+        form = RoutineForm(instance=routine, initial={"steps_text": existing_steps})
+
+    return render(request, "wellbeing/edit_routine.html", {"form": form, "routine": routine})
+
+@login_required
+def delete_routine(request, routine_id):
+    routine = get_object_or_404(Routine, id=routine_id, created_by=request.user)
+    if request.method == "POST":
+        routine.delete()
+        return redirect("routine_list")
+    return render(request, "wellbeing/delete_routine.html", {"routine": routine})

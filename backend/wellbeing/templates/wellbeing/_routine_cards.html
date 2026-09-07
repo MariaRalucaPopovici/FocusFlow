@@ -1,0 +1,29 @@
+{% for routine in routines %}
+    <article class="routine-card">
+        <h3>{{ routine.title }}</h3>
+        <div class="routine-meta">
+    <span class="status-badge">{{ routine.get_routine_type_display }}</span>
+    <span class="status-badge mode">{{ routine.get_mode_display }}</span>
+</div>
+        {% if routine.description %}<p>{{ routine.description }}</p>{% endif %}
+        <ol class="routine-steps">
+            {% for step in routine.steps.all %}
+                <li>
+                    <div class="step-text">
+                        <strong>{{ step.title }}</strong>
+                        {% if step.duration_minutes %} <span class="step-duration">({{ step.duration_minutes }} min)</span>{% endif %}
+                        {% if step.description %}<p>{{ step.description }}</p>{% endif %}
+                    </div>
+                </li>
+            {% endfor %}
+        </ol>
+        {% if routine.created_by == user %}
+            <div class="routine-actions">
+                <a href="{% url 'edit_routine' routine.id %}" class="button-secondary">Edit</a>
+                <a href="{% url 'delete_routine' routine.id %}" class="button-secondary">Delete</a>
+            </div>
+        {% endif %}
+    </article>
+{% empty %}
+    <p>No routines yet.</p>
+{% endfor %}
