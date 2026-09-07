@@ -38,13 +38,7 @@
 
     --shadow: 0 3px 12px rgba(72, 51, 34, 0.07);
 
-    --page-pattern:
-        repeating-linear-gradient(
-            to bottom,
-            transparent 0,
-            transparent 31px,
-            rgba(113, 142, 162, 0.09) 32px
-        );
+    --bg-image: url('../images/themes/notepad.jpg');
 }
 
 
@@ -78,7 +72,7 @@
     --danger-hover: #973c42;
 
     --shadow: 0 4px 14px rgba(120, 69, 43, 0.08);
-    --page-pattern: none;
+    --bg-image: url('../images/themes/autumn.jpg');
 }
 
 
@@ -86,7 +80,7 @@
 
 [data-theme="winter"] {
     --bg: #f3f7fa;
-    --surface: #ffffff;
+    --surface: #f5f9fc;
     --surface-soft: #e3eef5;
 
     --text: #172a3a;
@@ -112,7 +106,7 @@
     --danger-hover: #923d46;
 
     --shadow: 0 4px 15px rgba(42, 79, 105, 0.07);
-    --page-pattern: none;
+    --bg-image: url('../images/themes/winter.jpg');
 }
 
 
@@ -120,7 +114,7 @@
 
 [data-theme="christmas"] {
     --bg: #fffaf7;
-    --surface: #ffffff;
+    --surface: #f6faf7;
     --surface-soft: #edf4ee;
 
     --text: #24382e;
@@ -146,7 +140,7 @@
     --danger-hover: #9e2831;
 
     --shadow: 0 4px 14px rgba(35, 83, 57, 0.07);
-    --page-pattern: none;
+    --bg-image: url('../images/themes/christmas.jpg');
 }
 
 
@@ -154,7 +148,7 @@
 
 [data-theme="spring"] {
     --bg: #fbf9f2;
-    --surface: #ffffff;
+    --surface: #f8faf4;
     --surface-soft: #e7f0df;
 
     --text: #304132;
@@ -180,7 +174,7 @@
     --danger-hover: #95434f;
 
     --shadow: 0 4px 14px rgba(74, 104, 68, 0.07);
-    --page-pattern: none;
+    --bg-image: url('../images/themes/spring.jpg');
 }
 
 
@@ -188,7 +182,7 @@
 
 [data-theme="easter"] {
     --bg: #fdfaf3;
-    --surface: #ffffff;
+    --surface: #faf8fc;
     --surface-soft: #eee7f7;
 
     --text: #393347;
@@ -214,7 +208,7 @@
     --danger-hover: #984456;
 
     --shadow: 0 4px 14px rgba(88, 68, 112, 0.07);
-    --page-pattern: none;
+    --bg-image: url('../images/themes/easter.jpg');
 }
 
 
@@ -222,7 +216,7 @@
 
 [data-theme="summer"] {
     --bg: #f8fbf7;
-    --surface: #ffffff;
+    --surface: #f5fbfa;
     --surface-soft: #e4f2ed;
 
     --text: #203c40;
@@ -248,7 +242,7 @@
     --danger-hover: #a03f43;
 
     --shadow: 0 4px 14px rgba(41, 116, 112, 0.07);
-    --page-pattern: none;
+    --bg-image: url('../images/themes/summer.jpg');
 }
 
 
@@ -282,7 +276,7 @@
     --danger-hover: #e88c93;
 
     --shadow: none;
-    --page-pattern: none;
+    --bg-image: url('../images/themes/midnight.jpg');
 }
 
 
@@ -316,7 +310,7 @@
     --danger-hover: #e78b8e;
 
     --shadow: none;
-    --page-pattern: none;
+    --bg-image: url('../images/themes/autumn-dark.jpg');
 }
 
 
@@ -344,72 +338,24 @@ body {
         sans-serif;
 
     background-color: var(--bg);
-    background-image: var(--page-pattern);
+    background-image: linear-gradient(rgba(20, 14, 10, 0.32), rgba(20, 14, 10, 0.32)), var(--bg-image);
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
 
     color: var(--text);
 
     transition:
         background-color 0.2s ease,
-        color 0.2s ease;
+        color 0.2s ease,
+        background-image 0.3s ease;
 }
 
 
 /*  =========================
-    3. HEADER / NAVIGATION
+    3. LOGOUT FORM
     ========================= */
-
-header {
-    background-color: var(--surface);
-
-    padding: 20px 8%;
-
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    gap: 24px;
-
-    border-bottom: 1px solid var(--border);
-}
-
-header h1 {
-    margin: 0;
-
-    font-size: 27px;
-    line-height: 1;
-
-    color: var(--text);
-}
-
-header nav {
-    display: flex;
-    align-items: center;
-    gap: 30px;
-}
-
-header nav a,
-.nav-button {
-    margin: 0;
-    padding: 8px 0;
-
-    display: inline-flex;
-    align-items: center;
-
-    border: 0;
-    background: transparent;
-
-    color: var(--muted);
-
-    font: inherit;
-    font-weight: 700;
-
-    text-decoration: none;
-    cursor: pointer;
-}
-
-header nav a:hover,
-.nav-button:hover {
-    color: var(--primary);
-}
 
 .logout-form {
     margin: 0;
@@ -425,37 +371,10 @@ header nav a:hover,
     margin: 0;
 }
 
-#theme-select {
-    padding: 8px 10px;
-
-    border: 1px solid var(--border);
-    border-radius: 7px;
-
-    background-color: var(--surface);
-    color: var(--text);
-
-    font: inherit;
-    font-weight: 600;
-
-    cursor: pointer;
-}
-
-#theme-select:focus {
-    outline: 3px solid color-mix(in srgb, var(--focus) 28%, transparent);
-    border-color: var(--focus);
-}
-
 
 /*  =========================
     4. MAIN LAYOUT
     ========================= */
-
-main {
-    width: 90%;
-    max-width: 1000px;
-
-    margin: 40px auto;
-}
 
 main h2 {
     margin-top: 0;
@@ -477,11 +396,17 @@ main a:hover {
 
 .page-heading {
     margin-bottom: 30px;
+    padding: 18px 22px;
 
     display: flex;
     justify-content: space-between;
-    align-items: center;
+    align-items: flex-start;
     gap: 20px;
+
+    background: color-mix(in srgb, var(--surface) 55%, transparent);
+    backdrop-filter: blur(14px);
+    border-radius: 14px;
+    box-shadow: var(--shadow);
 }
 
 .page-heading h2 {
@@ -491,6 +416,25 @@ main a:hover {
 .page-heading p {
     margin: 0;
     color: var(--muted);
+}
+
+.page-heading-badge {
+    display: inline-block;
+    margin-top: 10px;
+}
+
+.page-heading-actions {
+    display: flex;
+    gap: 12px;
+    flex-shrink: 0;
+}
+
+.button-secondary.button-compact,
+.button-primary.button-compact,
+.button-danger.button-compact {
+    min-height: 26px;
+    padding: 3px 10px;
+    font-size: 12px;
 }
 
 
@@ -512,10 +456,15 @@ form {
 
 form label,
 .form-field label {
-    display: block;
+    display: inline-block;
 
     margin-top: 0;
     margin-bottom: 8px;
+    padding: 6px 12px;
+
+    background: color-mix(in srgb, var(--surface) 78%, transparent);
+    backdrop-filter: blur(6px);
+    border-radius: 8px;
 
     font-weight: 700;
 }
@@ -530,7 +479,8 @@ form select {
     border: 1px solid var(--border);
     border-radius: 7px;
 
-    background-color: var(--surface);
+    background: color-mix(in srgb, var(--surface) 68%, transparent);
+    backdrop-filter: blur(8px);
     color: var(--text);
 
     font: inherit;
@@ -573,7 +523,8 @@ form select:focus {
     border: 1px solid var(--border);
     border-radius: 7px;
 
-    background-color: var(--surface);
+    background: color-mix(in srgb, var(--surface) 68%, transparent);
+    backdrop-filter: blur(8px);
     color: var(--text);
 
     font: inherit;
@@ -697,46 +648,68 @@ button,
     ========================= */
 
 .task-card {
-    margin-bottom: 20px;
-    padding: 24px;
+    display: flex;
+    flex-direction: column;
 
-    background-color: var(--surface);
+    padding: 16px 18px;
+
+    background: color-mix(in srgb, var(--surface) 62%, transparent);
+    backdrop-filter: blur(9px);
 
     border: 1px solid var(--border);
-    border-radius: 10px;
+    border-radius: 12px;
 
     box-shadow: var(--shadow);
+
+    transition: transform 0.15s ease, box-shadow 0.15s ease;
+}
+
+.task-card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 16px rgba(72, 51, 34, 0.1);
 }
 
 .task-card h3 {
     margin-top: 0;
-    margin-bottom: 12px;
+    margin-bottom: 6px;
 
-    font-size: 22px;
+    font-size: 17px;
 }
 
 .task-card p {
+    margin: 4px 0;
     color: var(--text);
 }
 
+.task-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 16px;
+    align-items: stretch;
+}
+
+.task-grid .empty-state {
+    grid-column: 1 / -1;
+}
+
 .task-status {
-    margin: 18px 0;
+    margin: 10px 0;
 
     display: flex;
     flex-wrap: wrap;
 
-    gap: 8px;
+    gap: 6px;
 }
 
 .status-badge {
-    padding: 6px 10px;
+    padding: 4px 10px;
 
     border-radius: 999px;
 
     background-color: var(--surface-soft);
     color: var(--text);
 
-    font-size: 14px;
+    font-size: 12.5px;
     font-weight: 700;
 }
 
@@ -761,12 +734,13 @@ button,
 }
 
 .task-actions {
-    margin-top: 20px;
+    margin-top: auto;
+    padding-top: 12px;
 
     display: flex;
     flex-wrap: wrap;
 
-    gap: 12px;
+    gap: 8px;
 }
 
 
@@ -777,7 +751,8 @@ button,
 .empty-state {
     padding: 35px;
 
-    background-color: var(--surface);
+    background: color-mix(in srgb, var(--surface) 62%, transparent);
+    backdrop-filter: blur(9px);
 
     border: 1px solid var(--border);
     border-radius: 10px;
@@ -792,6 +767,28 @@ button,
     11. DELETE CONFIRMATION
    ========================= */
 
+.delete-confirmation {
+    max-width: 480px;
+    padding: 28px;
+
+    background: color-mix(in srgb, var(--surface) 62%, transparent);
+    backdrop-filter: blur(9px);
+    border: 1px solid var(--border);
+    border-radius: 14px;
+
+    box-shadow: var(--shadow);
+}
+
+.delete-confirmation h2 {
+    margin-top: 0;
+    margin-bottom: 12px;
+}
+
+.delete-confirmation p {
+    color: var(--text);
+    margin-bottom: 20px;
+}
+
 .delete-form {
     margin: 0;
     max-width: none;
@@ -804,27 +801,6 @@ button,
 
 @media (max-width: 700px) {
 
-    header {
-        padding: 18px 5%;
-
-        flex-wrap: wrap;
-
-        gap: 16px;
-    }
-
-    header h1 {
-        font-size: 23px;
-    }
-
-    header nav {
-        gap: 20px;
-    }
-
-    main {
-        width: 92%;
-        margin: 28px auto;
-    }
-
     main h2 {
         font-size: 28px;
     }
@@ -835,6 +811,15 @@ button,
     }
 
     .page-heading .button-primary {
+        width: 100%;
+    }
+
+        .page-heading-actions {
+        flex-direction: column;
+        width: 100%;
+    }
+
+    .page-heading-actions .button-secondary {
         width: 100%;
     }
 
@@ -871,23 +856,10 @@ button,
     .task-options {
         gap: 18px;
     }
-
-    #theme-select {
-        max-width: 170px;
-}
 }
 
 
 @media (max-width: 430px) {
-
-    header {
-        align-items: flex-start;
-    }
-
-    header nav {
-        width: 100%;
-        justify-content: space-between;
-    }
 
     .task-card {
         padding: 19px;
@@ -903,7 +875,14 @@ button,
     ========================= */
 
 .field-label {
+    display: inline-block;
     margin: 0 0 12px;
+    padding: 6px 12px;
+
+    background: color-mix(in srgb, var(--surface) 68%, transparent);
+    backdrop-filter: blur(8px);
+    border-radius: 8px;
+
     font-weight: 700;
 }
 
@@ -922,7 +901,8 @@ button,
     min-height: 54px;
     padding: 12px 14px;
 
-    background-color: var(--surface);
+    background: color-mix(in srgb, var(--surface) 65%, transparent);
+    backdrop-filter: blur(8px);
     color: var(--text);
 
     border: 1px solid var(--border);
@@ -960,29 +940,13 @@ button,
     outline-offset: 2px;
 }
 
-.reset-result {
-    max-width: 650px;
-    padding: 32px;
-
-    background-color: var(--surface);
-    border: 1px solid var(--border);
-    border-radius: 14px;
-
-    box-shadow: var(--shadow);
-}
-
 .result-label {
     margin: 0 0 8px;
-
+    text-align: center;
     color: var(--primary);
-    font-size: 13px;
+    font-size: 22px;
     font-weight: 700;
     letter-spacing: 1.5px;
-}
-
-.reset-result h2 {
-    margin: 0 0 12px;
-    font-size: 30px;
 }
 
 .reset-header {
@@ -996,11 +960,21 @@ button,
     padding: 32px;
     margin-bottom: 24px;
 
-    background-color: var(--surface);
+    background: color-mix(in srgb, var(--surface) 62%, transparent);
+    backdrop-filter: blur(9px);
     border: 1px solid var(--border);
     border-radius: 14px;
 
     box-shadow: var(--shadow);
+}
+
+.reset-header-main {
+    flex: 1 1 260px;
+    min-width: 260px;
+}
+
+.result-message {
+    overflow-wrap: break-word;
 }
 
 .result-pills {
@@ -1011,7 +985,7 @@ button,
 }
 
 .routine-mini {
-    flex-shrink: 0;
+    flex: 0 0 220px;
     padding: 16px;
     text-align: center;
 
@@ -1035,7 +1009,8 @@ button,
     display: flex;
     flex-direction: column;
 
-    background-color: var(--surface);
+    background: color-mix(in srgb, var(--surface) 62%, transparent);
+    backdrop-filter: blur(9px);
     border: 1px solid var(--border);
     border-left: 5px solid var(--primary);
     border-radius: 10px;
@@ -1060,18 +1035,6 @@ button,
     color: var(--muted);
     font-size: 17px;
     line-height: 1.6;
-}
-
-.result-summary {
-    padding: 16px 18px;
-    margin-bottom: 24px;
-
-    background-color: var(--surface-soft);
-    border-radius: 10px;
-}
-
-.result-summary p {
-    margin: 5px 0;
 }
 
 .ai-suggestion ul {
@@ -1125,10 +1088,6 @@ button,
     content: "🌙";
 }
 
-/*  =========================
-    14. STRATEGY LIBRARY
-    ========================= */
-
 @media (max-width: 700px) {
 
     .choice-grid {
@@ -1150,7 +1109,8 @@ button,
     margin: 4px 0 24px;
     padding: 12px 16px;
 
-    background-color: var(--surface);
+    background: color-mix(in srgb, var(--surface) 65%, transparent);
+    backdrop-filter: blur(8px);
     color: var(--text);
 
     border: 1px solid var(--border);
@@ -1170,7 +1130,8 @@ button,
     margin-bottom: 20px;
     padding: 24px;
 
-    background-color: var(--surface);
+    background: color-mix(in srgb, var(--surface) 62%, transparent);
+    backdrop-filter: blur(9px);
 
     border: 1px solid var(--border);
     border-left: 5px solid var(--primary);
@@ -1221,17 +1182,24 @@ button,
     color: var(--primary-hover);
 }
 
+
+/*  =========================
+    15. ROUTINES
+    ========================= */
+
 .routine-card {
     margin-bottom: 0;
     padding: 24px;
 
-    background-color: var(--surface);
+    background: color-mix(in srgb, var(--surface) 62%, transparent);
+    backdrop-filter: blur(9px);
 
     border: 1px solid var(--border);
     border-left: 5px solid var(--primary);
     border-radius: 10px;
 
     box-shadow: var(--shadow);
+    overflow-wrap: break-word;
 }
 
 .routine-grid {
@@ -1292,6 +1260,12 @@ button,
     font-weight: 700;
 }
 
+.step-text {
+    flex: 1;
+    min-width: 0;
+    overflow-wrap: break-word;
+}
+
 .step-duration {
     color: var(--muted);
     font-size: 14px;
@@ -1304,12 +1278,24 @@ button,
     font-size: 14px;
 }
 
+.routine-actions {
+    display: flex;
+    gap: 10px;
+    margin-top: 12px;
+}
+
+
+/*  =========================
+    16. AUTH PAGES
+    ========================= */
+
 .auth-card {
     max-width: 420px;
     padding: 32px;
     margin: 40px auto 0;
 
-    background-color: var(--surface);
+    background: color-mix(in srgb, var(--surface) 62%, transparent);
+    backdrop-filter: blur(9px);
     border: 1px solid var(--border);
     border-radius: 14px;
 
@@ -1338,6 +1324,7 @@ button,
     width: 100%;
 }
 
+
 /* =========================
    DAILY TIP POP-UP
    ========================= */
@@ -1350,12 +1337,13 @@ button,
     display: flex;
     align-items: flex-start;
     gap: 10px;
-    background: var(--surface);
+    background: color-mix(in srgb, var(--surface) 70%, transparent);
+    backdrop-filter: blur(8px);
     border: 1px solid var(--border);
     border-radius: 12px;
     padding: 16px 40px 16px 16px;
-    box-shadow: var(--shadow);
-    z-index: 1000;
+    box-shadow: 0 6px 24px rgba(0, 0, 0, 0.18);
+    z-index: 9999;
 }
 
 .daily-tip .tip-icon {
@@ -1403,7 +1391,8 @@ button,
 }
 
 .dashboard-main-card {
-    background: var(--surface);
+    background: color-mix(in srgb, var(--surface) 62%, transparent);
+    backdrop-filter: blur(9px);
     border: 1px solid var(--border);
     border-radius: 12px;
     padding: 24px;
@@ -1411,7 +1400,8 @@ button,
 }
 
 .dashboard-card {
-    background: var(--surface);
+    background: color-mix(in srgb, var(--surface) 62%, transparent);
+    backdrop-filter: blur(9px);
     border: 1px solid var(--border);
     border-radius: 12px;
     padding: 20px;
@@ -1422,6 +1412,7 @@ button,
 }
 
 .dashboard-card-header {
+    size: 18px;
     display: flex;
     align-items: center;
     gap: 8px;
@@ -1473,11 +1464,6 @@ button,
     padding: 2px 10px;
 }
 
-.muted-text {
-    color: var(--muted);
-    font-size: 13px;
-}
-
 .dashboard-view-all-btn {
     display: block;
     text-align: center;
@@ -1487,6 +1473,32 @@ button,
 
 .button-secondary.dashboard-view-all-btn {
     background: var(--surface-soft);
+}
+
+.dashboard-task-buttons {
+    display: flex;
+    gap: 12px;
+    margin-top: 16px;
+}
+
+.dashboard-task-buttons .dashboard-view-all-btn {
+    margin-top: 0;
+    flex: 1;
+}
+
+.dashboard-priority-section {
+    background: var(--urgent-bg);
+    border-radius: 12px;
+    padding: 12px 16px;
+    margin-bottom: 20px;
+}
+
+.dashboard-ai-section {
+    background: var(--surface-soft);
+    border: 1px dashed var(--border);
+    border-radius: 12px;
+    padding: 12px 16px;
+    margin-top: 20px;
 }
 
 /* =========================
@@ -1501,7 +1513,8 @@ button,
 }
 
 .dopamine-category {
-    background: var(--surface);
+    background: color-mix(in srgb, var(--surface) 62%, transparent);
+    backdrop-filter: blur(9px);
     border: 1px solid var(--border);
     border-radius: 12px;
     padding: 20px;
@@ -1537,22 +1550,9 @@ button,
     align-self: flex-start;
 }
 
-.dashboard-task-buttons {
-    display: flex;
-    gap: 12px;
-    margin-top: 16px;
-}
-
-.dashboard-task-buttons .dashboard-view-all-btn {
-    margin-top: 0;
-    flex: 1;
-}
-
-.routine-actions {
-    display: flex;
-    gap: 10px;
-    margin-top: 12px;
-}
+/* =========================
+   SEARCH INPUT (Tasks / Routines)
+   ========================= */
 
 .search-input {
     display: block;
@@ -1562,9 +1562,14 @@ button,
     margin: 16px 0;
     border: 1px solid var(--border);
     border-radius: 8px;
-    background: var(--surface);
+    background: color-mix(in srgb, var(--surface) 65%, transparent);
+    backdrop-filter: blur(8px);
     color: var(--text);
 }
+
+/* =========================
+   BRAIN DUMP / JOURNAL
+   ========================= */
 
 .journal-entries {
     display: flex;
@@ -1574,7 +1579,8 @@ button,
 }
 
 .journal-entry-card {
-    background: var(--surface);
+    background: color-mix(in srgb, var(--surface) 62%, transparent);
+    backdrop-filter: blur(9px);
     border: 1px solid var(--border);
     border-radius: 12px;
     padding: 20px;
@@ -1585,17 +1591,120 @@ button,
     margin: 8px 0 12px 0;
 }
 
-.dashboard-priority-section {
-    background: var(--urgent-bg);
-    border-radius: 12px;
-    padding: 12px 16px;
-    margin-bottom: 20px;
+/* =========================
+   SIDEBAR LAYOUT
+   ========================= */
+
+.app-layout {
+    display: flex;
+    min-height: 100vh;
 }
 
-.dashboard-ai-section {
+.sidebar {
+    width: 160px;
+    flex-shrink: 0;
+    background: color-mix(in srgb, var(--surface) 55%, transparent);
+    backdrop-filter: blur(18px);
+    border-right: 1px solid var(--border);
+    padding: 24px 16px;
+    display: flex;
+    flex-direction: column;
+    position: sticky;
+    top: 0;
+    height: 100vh;
+    overflow-y: auto;
+}
+
+.sidebar-logo {
+    font-size: 22px;
+    margin: 0 0 24px 0;
+    padding: 0 12px;
+}
+
+.sidebar-nav {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    flex: 1;
+}
+
+.sidebar-nav a {
+    padding: 10px 12px;
+    border-radius: 8px;
+    color: var(--text);
+    text-decoration: none;
+    font-weight: 600;
+}
+
+.sidebar-nav a:hover {
     background: var(--surface-soft);
-    border: 1px dashed var(--border);
-    border-radius: 12px;
-    padding: 12px 16px;
-    margin-top: 20px;
+}
+
+.sidebar-footer {
+    display: flex;
+    flex-direction: row;
+    gap: 10px;
+    margin-top: auto;
+    padding-top: 16px;
+}
+
+.icon-button {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    border: 1px solid var(--border);
+    background: var(--surface-soft);
+    color: var(--text);
+    font-size: 18px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0;
+}
+
+.icon-button:hover {
+    background: var(--primary);
+    color: var(--primary-text);
+}
+
+.main-content {
+    flex: 1;
+    padding: 32px;
+    min-width: 0;
+}
+
+@media (max-width: 768px) {
+    .app-layout {
+        flex-direction: column;
+    }
+
+    .sidebar {
+        width: 100%;
+        flex-direction: row;
+        flex-wrap: wrap;
+        align-items: center;
+        border-right: none;
+        border-bottom: 1px solid var(--border);
+        padding: 16px;
+        position: static;
+        height: auto;
+    }
+
+    .sidebar-logo {
+        margin: 0 16px 0 0;
+        padding: 0;
+    }
+
+    .sidebar-nav {
+        flex-direction: row;
+        flex-wrap: wrap;
+        gap: 8px;
+    }
+
+    .sidebar-footer {
+        flex-direction: row;
+        margin-top: 8px;
+        width: 100%;
+    }
 }

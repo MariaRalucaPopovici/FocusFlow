@@ -51,6 +51,9 @@
     </div>
 {% endif %}
 
-<a href="{% url 'task_list' %}" class="button-primary">View My Tasks</a>
+<div class="form-actions">
+    <a href="{% url 'task_list' %}" class="button-primary">View My Tasks</a>
+    <a href="{% url 'daily_reset' %}?new=1" class="button-secondary">Do Another Check-In</a>
+</div>
 
 {% endblock %}

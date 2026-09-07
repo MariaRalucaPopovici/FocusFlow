@@ -5,8 +5,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="{% static 'css/styles.css' %}?v=5">
-    <script src="{% static 'js/theme.js' %}?v=1" defer></script>
+    <link rel="stylesheet" href="{% static 'css/styles.css' %}?v=6">
+    <script src="{% static 'js/theme.js' %}?v=2" defer></script>
     <script src="{% static 'js/tip.js' %}?v=1" defer></script>
     <title>
         {% block title %}
@@ -14,53 +14,55 @@
         {% endblock %}
     </title>
 </head>
+
 <body>
-    <header>
-        <h1>FocusFlow</h1>
+    <div class="app-layout">
+        <aside class="sidebar">
+            <h1 class="sidebar-logo">FocusFlow</h1>
 
-        <nav>
             {% if user.is_authenticated %}
-                <a href="{% url 'dashboard' %}">Dashboard</a>
-                <a href="{% url 'task_list' %}">My Tasks</a>
-                <a href="{% url 'daily_reset' %}">Daily Reset</a>
-                <a href="{% url 'strategy_library' %}">Strategies</a>
-                <a href="{% url 'routine_list' %}">Routines</a>
-                <a href="{% url 'journal_list' %}">Brain Dump</a>
+                <nav class="sidebar-nav">
+                    <a href="{% url 'dashboard' %}">Dashboard</a>
+                    <a href="{% url 'task_list' %}">My Tasks</a>
+                    <a href="{% url 'daily_reset' %}">Daily Reset</a>
+                    <a href="{% url 'strategy_library' %}">Strategies</a>
+                    <a href="{% url 'routine_list' %}">Routines</a>
+                    <a href="{% url 'journal_list' %}">Brain Dump</a>
+                </nav>
 
-                <select id="theme-select" aria-label="Choose theme">
-                    <option value="notepad">Old Notepad</option>
-                    <option value="autumn">Autumn</option>
-                    <option value="winter">Winter Wonderland</option>
-                    <option value="christmas">Christmas</option>
-                    <option value="spring">Spring</option>
-                    <option value="easter">Easter</option>
-                    <option value="summer">Summer</option>
-                    <option value="midnight">Midnight</option>
-                    <option value="autumn-dark">Dark Autumn</option>
-                </select>
-
-                <form method="POST" action="{% url 'logout' %}" class="logout-form">
-                    {% csrf_token %}
-                    <button type="submit" class="button-secondary">Logout</button>
-                </form>
+                <div class="sidebar-footer">
+                    <button type="button" id="theme-toggle" class="icon-button" aria-label="Change theme"></button>
+                    <form method="POST" action="{% url 'logout' %}" class="logout-form">
+                        {% csrf_token %}
+                        <button type="submit" class="icon-button" aria-label="Logout" title="Logout">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path>
+                                <polyline points="16 17 21 12 16 7"></polyline>
+                                <line x1="21" y1="12" x2="9" y2="12"></line>
+                            </svg>
+                        </button>
+                    </form>
+                </div>
             {% else %}
-                <a href="{% url 'login' %}">Login</a>
-                <a href="{% url 'register' %}">Register</a>
+                <nav class="sidebar-nav">
+                    <a href="{% url 'login' %}">Login</a>
+                    <a href="{% url 'register' %}">Register</a>
+                </nav>
             {% endif %}
-        </nav>
-    </header>
+        </aside>
 
-    <main>
-        {% if messages %}
-            <ul class="messages">
-                {%for message in messages %}
-                    <li class="message {{ message.tags }}">{{ message }}</li>
-                {% endfor %}
-            </ul>
-        {% endif %}
-        {% block content %}
-        {% endblock %}
-    </main>
+        <main class="main-content">
+            {% if messages %}
+                <ul class="messages">
+                    {%for message in messages %}
+                        <li class="message {{ message.tags }}">{{ message }}</li>
+                    {% endfor %}
+                </ul>
+            {% endif %}
+            {% block content %}
+            {% endblock %}
+        </main>
+    </div>
 
     {% if daily_tip %}
         <div id="daily-tip" class="daily-tip">
@@ -69,6 +71,5 @@
             <button id="daily-tip-close" class="daily-tip-close" aria-label="Dismiss tip">✕</button>
         </div>
     {% endif %}
-
 </body>
 </html>

@@ -19,8 +19,8 @@
         </ol>
         {% if routine.created_by == user %}
             <div class="routine-actions">
-                <a href="{% url 'edit_routine' routine.id %}" class="button-secondary">Edit</a>
-                <a href="{% url 'delete_routine' routine.id %}" class="button-secondary">Delete</a>
+                <a href="{% url 'edit_routine' routine.id %}" class="button-secondary button-compact">Edit</a>
+                <a href="{% url 'delete_routine' routine.id %}" class="button-secondary button-compact">Delete</a>
             </div>
         {% endif %}
     </article>

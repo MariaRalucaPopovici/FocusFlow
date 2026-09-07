@@ -6,9 +6,12 @@ Edit Task | FocusFlow
 
 {% block content %}
 
-<h1>Edit Task</h1>
-
-<h2>{{ task.title }}</h2>
+<div class="page-heading">
+    <div>
+        <h2>Edit Task</h2>
+        <p>{{ task.title }}</p>
+    </div>
+</div>
 
 <form method="POST" class="task-form">
     {% csrf_token %}

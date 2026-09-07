@@ -12,18 +12,20 @@ My tasks | FocusFlow
         <h2>My Tasks</h2>
         <p>Manage what needs your attention.</p>
         {% if last_reset_mode %}
-            <span class="status-badge mode">Last reset: {{ last_reset_mode }}</span>
+            <span class="status-badge mode page-heading-badge">Last reset: {{ last_reset_mode }}</span>
         {% endif %}
     </div>
     
-    <a href="{% url 'add_task' %}" class="button-primary"> + Add Task</a>
-    <a href="{% url 'ai_generate_tasks' %}?next={% url 'task_list' %}" class="button-secondary">✨ AI Generate</a>
+    <div class="page-heading-actions">
+        <a href="{% url 'add_task' %}" class="button-primary">+ Add Task</a>
+        <a href="{% url 'ai_generate_tasks' %}?next={% url 'task_list' %}" class="button-secondary">✨ AI Generate</a>
+    </div>
 </div>
 
 <input type="search" id="task-search" class="search-input" placeholder="Search tasks..." autocomplete="off"
     data-search-url="{% url 'task_search' %}">
 
-<div id="task-list">
+<div id="task-list" class="task-grid">
     {% include "tasks/_task_cards.html" %}
 </div>
 

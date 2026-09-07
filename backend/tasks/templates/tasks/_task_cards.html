@@ -27,15 +27,15 @@
     </div>
 
     <div class="task-actions">
-        <a href="{% url 'edit_task' task.id %}" class="button-secondary">Edit</a>
-        <a href="{% url 'toggle_complete' task.id %}" class="button-secondary">
+        <a href="{% url 'edit_task' task.id %}" class="button-secondary button-compact">Edit</a>
+        <a href="{% url 'toggle_complete' task.id %}" class="button-secondary button-compact">
             {% if task.completed %}
                 Mark Incomplete
             {% else %}
                 Mark Complete
             {% endif %}
         </a>
-        <a href="{% url 'delete_task' task.id %}" class="button-secondary">Delete</a>
+        <a href="{% url 'delete_task' task.id %}" class="button-secondary button-compact">Delete</a>
     </div>
 </div>
 

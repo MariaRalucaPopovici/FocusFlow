@@ -25,8 +25,8 @@ Brain Dump | FocusFlow
             <p class="muted-text">{{ entry.created_at|date:"D, N j, Y - g:i A" }}</p>
             <p class="journal-entry-content">{{ entry.content|linebreaks }}</p>
             <div class="task-actions">
-                <a href="{% url 'edit_journal_entry' entry.id %}" class="button-secondary">Edit</a>
-                <a href="{% url 'delete_journal_entry' entry.id %}" class="button-secondary">Delete</a>
+                <a href="{% url 'edit_journal_entry' entry.id %}" class="button-secondary button-compact">Edit</a>
+                <a href="{% url 'delete_journal_entry' entry.id %}" class="button-secondary button-compact">Delete</a>
             </div>
         </div>
     {% empty %}

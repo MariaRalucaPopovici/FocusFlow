@@ -7,7 +7,7 @@ from django.conf import settings
 from django.utils import timezone
 
 from .forms import DailyCheckInForm, RoutineForm, JournalEntryForm
-from .models import Strategy, Routine, RoutineStep, DopamineMenuItem, JournalEntry
+from .models import Strategy, Routine, RoutineStep, DopamineMenuItem, JournalEntry, DailyCheckIn
 from tasks.models import Task
 
 def AI_suggestion(check_in, tasks, routines):
@@ -121,11 +121,48 @@ def daily_reset(request):
                     line = line.replace("*", "")
                     if line:
                         ai_suggestion.append(line)            
-            
+
+            # Remember this result so returning to Daily Reset later (e.g. via the
+            # sidebar) shows the same result instead of a blank form, until the
+            # user explicitly starts a new check-in.
+            request.session["daily_reset_result"] = {
+                "check_in_id": check_in.id,
+                "mode": mode,
+                "message": message,
+                "recommended_routine_id": recommended_routine.id if recommended_routine else None,
+                "recommended_strategy_ids": [s.id for s in recommended_strategies],
+                "ai_suggestion": ai_suggestion,
+            }
+
             response = render(request, "wellbeing/daily_reset_result.html", {"check_in": check_in, "mode": mode, "message": message, "recommended_strategies": recommended_strategies, "ai_suggestion": ai_suggestion, "recommended_routine": recommended_routine,})
             response.set_cookie("last_reset_mode", mode, max_age=60 * 60 * 24 * 7)
             return response
     else:
+        if request.GET.get("new"):
+            # User explicitly asked to start a fresh check-in.
+            request.session.pop("daily_reset_result", None)
+        else:
+            saved = request.session.get("daily_reset_result")
+            if saved:
+                check_in = DailyCheckIn.objects.filter(id=saved["check_in_id"], user=request.user).first()
+                if check_in:
+                    recommended_routine = None
+                    if saved["recommended_routine_id"]:
+                        recommended_routine = Routine.objects.filter(id=saved["recommended_routine_id"]).first()
+
+                    strategies_by_id = Strategy.objects.in_bulk(saved["recommended_strategy_ids"])
+                    recommended_strategies = [
+                        strategies_by_id[sid] for sid in saved["recommended_strategy_ids"] if sid in strategies_by_id
+                    ]
+
+                    return render(request, "wellbeing/daily_reset_result.html", {
+                        "check_in": check_in,
+                        "mode": saved["mode"],
+                        "message": saved["message"],
+                        "recommended_strategies": recommended_strategies,
+                        "ai_suggestion": saved["ai_suggestion"],
+                        "recommended_routine": recommended_routine,
+                    })
         form = DailyCheckInForm()
     return render(request, "wellbeing/daily_reset.html", {"form": form,})
 
@@ -279,3 +316,4 @@ def delete_journal_entry(request, entry_id):
         entry.delete()
         return redirect("journal_list")
     return render(request, "wellbeing/delete_journal_entry.html", {"entry": entry})
+
