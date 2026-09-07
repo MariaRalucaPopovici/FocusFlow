@@ -1,0 +1,26 @@
+{% extends "base.html" %}
+
+{% block title %}
+AI Task Generator | FocusFlow
+{% endblock %}
+
+{% block content %}
+
+<div class="page-heading">
+    <div>
+        <h2>AI Task Generator</h2>
+        <p>Describe a task or goal in your own words, and let AI break it into smaller steps you can start right away.</p>
+    </div>
+</div>
+
+<form method="POST" class="task-form">
+    {% csrf_token %}
+    <input type="hidden" name="next" value="{{ request.GET.next }}">
+    <div class="form-field">
+        <label for="description">What do you need to get done?</label>
+        <textarea name="description" id="description" rows="5" placeholder="e.g. Write my dissertation literature review chapter" required></textarea>
+    </div>
+    <button type="submit" class="button-primary">Generate Tasks</button>
+</form>
+
+{% endblock %}

@@ -1,0 +1,11 @@
+<div class="dashboard-task-row" data-task-id="{{ task.id }}">
+    <a href="{% url 'toggle_complete' task.id %}" class="task-tick" aria-label="Mark complete"></a>
+    <div class="dashboard-task-info">
+        <span>{{ task.title }}</span>
+        {% if task.urgent %}<span class="status-badge urgent status-badge-mini">Urgent</span>{% endif %}
+        {% if task.important %}<span class="status-badge important status-badge-mini">Important</span>{% endif %}
+    </div>
+    {% if task.deadline %}
+        <span class="muted-text">{{ task.deadline }}</span>
+    {% endif %}
+</div>

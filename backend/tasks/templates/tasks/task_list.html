@@ -17,6 +17,7 @@ My tasks | FocusFlow
     </div>
     
     <a href="{% url 'add_task' %}" class="button-primary"> + Add Task</a>
+    <a href="{% url 'ai_generate_tasks' %}?next={% url 'task_list' %}" class="button-secondary">✨ AI Generate</a>
 </div>
 
 <input type="search" id="task-search" class="search-input" placeholder="Search tasks..." autocomplete="off"

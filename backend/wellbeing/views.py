@@ -187,14 +187,19 @@ def add_routine(request):
 
 @login_required
 def dashboard(request):
-    tasks = Task.objects.filter(user=request.user, completed=False).order_by("deadline")[:5]
+    open_tasks = Task.objects.filter(user=request.user, completed=False)
+    priority_tasks = open_tasks.filter(urgent=True, important=True).order_by("-created_at")[:5]
+    my_tasks = open_tasks.filter(ai_generated=False).order_by("-created_at")
+    ai_tasks = open_tasks.filter(ai_generated=True).order_by("-created_at")
     last_reset_mode = request.COOKIES.get("last_reset_mode")
 
     dopamine_items = list(DopamineMenuItem.objects.filter(active=True))
     dopamine_suggestion = random.choice(dopamine_items) if dopamine_items else None
 
     return render(request, "wellbeing/dashboard.html", {
-        "tasks": tasks,
+        "my_tasks": my_tasks,
+        "ai_tasks": ai_tasks,
+        "priority_tasks": priority_tasks,
         "last_reset_mode": last_reset_mode,
         "dopamine_suggestion": dopamine_suggestion,
     })

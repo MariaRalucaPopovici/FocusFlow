@@ -21,31 +21,47 @@ Dashboard | FocusFlow
 <div class="dashboard-layout">
 
     <div class="dashboard-main-card">
+
+        {% if priority_tasks %}
+            <div class="dashboard-priority-section">
+                <div class="dashboard-card-header">
+                    <span class="card-icon">🔥</span>
+                    <p class="result-label">TOP PRIORITY</p>
+                </div>
+                {% for task in priority_tasks %}
+                    {% include "wellbeing/_dashboard_task_row.html" %}
+                {% endfor %}
+            </div>
+        {% endif %}
+
         <div class="dashboard-card-header">
             <span class="card-icon">📋</span>
-            <p class="result-label">TODAY'S TASKS</p>
+            <p class="result-label">MY TASKS</p>
         </div>
 
-        {% for task in tasks %}
-            <div class="dashboard-task-row">
-                <a href="{% url 'toggle_complete' task.id %}" class="task-tick" aria-label="Mark complete"></a>
-                <div class="dashboard-task-info">
-                    <span>{{ task.title }}</span>
-                    {% if task.urgent %}<span class="status-badge urgent status-badge-mini">Urgent</span>{% endif %}
-                    {% if task.important %}<span class="status-badge important status-badge-mini">Important</span>{% endif %}
-                </div>
-                {% if task.deadline %}
-                    <span class="muted-text">{{ task.deadline }}</span>
-                {% endif %}
-            </div>
+        {% for task in my_tasks %}
+            {% include "wellbeing/_dashboard_task_row.html" %}
         {% empty %}
             <p>No open tasks right now. Nice work.</p>
         {% endfor %}
 
         <div class="dashboard-task-buttons">
             <a href="{% url 'add_task' %}?next={% url 'dashboard' %}" class="button-primary dashboard-view-all-btn">+ Add Task</a>
+            <a href="{% url 'ai_generate_tasks' %}?next={% url 'dashboard' %}" class="button-secondary dashboard-view-all-btn">✨ AI Generate</a>
             <a href="{% url 'task_list' %}" class="button-secondary dashboard-view-all-btn">View All Tasks</a>
         </div>
+
+        {% if ai_tasks %}
+            <div class="dashboard-ai-section">
+                <div class="dashboard-card-header">
+                    <span class="card-icon">✨</span>
+                    <p class="result-label">AI SUGGESTED</p>
+                </div>
+                {% for task in ai_tasks %}
+                    {% include "wellbeing/_dashboard_task_row.html" %}
+                {% endfor %}
+            </div>
+        {% endif %}
     </div>
 
     <div class="dashboard-sidebar">
