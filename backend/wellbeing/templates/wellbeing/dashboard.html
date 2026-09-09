@@ -65,23 +65,41 @@ Dashboard | FocusFlow
 
     <div class="dashboard-sidebar">
 
-        <div class="dashboard-card">
-            <div class="dashboard-card-header">
-                <p class="result-label">DOPAMINE MENU</p>
-            </div>
-
-            {% if dopamine_suggestion %}
-                <p class="dopamine-category-label">{{ dopamine_suggestion.get_category_display }}</p>
-                <p class="dopamine-suggestion-title">{{ dopamine_suggestion.title }}</p>
-                <a href="{% url 'dashboard' %}" class="button-secondary dopamine-shuffle-btn">Try another suggestion</a>
-            {% else %}
-                <p>No menu items yet.</p>
-            {% endif %}
-
-            <a href="{% url 'dopamine_menu' %}" class="button-secondary dashboard-view-all-btn">View Full Menu</a>
+    <div class="dashboard-card">
+        <div class="dashboard-card-header">
+            <p class="result-label">DOPAMINE MENU</p>
         </div>
 
+        {% if dopamine_suggestion %}
+            <p class="dopamine-category-label">{{ dopamine_suggestion.get_category_display }}</p>
+            <p class="dopamine-suggestion-title">{{ dopamine_suggestion.title }}</p>
+            <a href="{% url 'dashboard' %}" class="button-secondary dopamine-shuffle-btn">Try another suggestion</a>
+        {% else %}
+            <p>No menu items yet.</p>
+        {% endif %}
+
+        <a href="{% url 'dopamine_menu' %}" class="button-secondary dashboard-view-all-btn">View Full Menu</a>
     </div>
+
+{% if daily_tip %}
+    <div class="dashboard-card daily-tip">
+        <div class="dashboard-card-header">
+            <p class="result-label">TIP FOR YOU</p>
+        </div>
+
+        <p class="tip-title">{{ daily_tip.title }}</p>
+
+        <p class="tip-text">
+            {{ daily_tip.short_tip|default:daily_tip.description|truncatewords:20 }}
+        </p>
+
+        <a href="{% url 'dashboard' %}" class="button-secondary tip-another-btn">
+            ✨ Get Another Tip
+        </a>
+    </div>
+{% endif %}
+
+</div>
 
 </div>
 

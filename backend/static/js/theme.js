@@ -1,6 +1,6 @@
 document.addEventListener("DOMContentLoaded", function () {
     const THEME_ICONS = {
-        notepad: "📓",
+        notepad: "📖",
         autumn: "🍂",
         winter: "❄️",
         christmas: "🎄",

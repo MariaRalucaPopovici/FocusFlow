@@ -5,7 +5,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="{% static 'css/styles.css' %}?v=6">
+    <link rel="stylesheet" href="{% static 'css/styles.css' %}?v=2">
     <script src="{% static 'js/theme.js' %}?v=2" defer></script>
     <script src="{% static 'js/tip.js' %}?v=1" defer></script>
     <title>
@@ -64,12 +64,5 @@
         </main>
     </div>
 
-    {% if daily_tip %}
-        <div id="daily-tip" class="daily-tip">
-            <span class="tip-icon">💡</span>
-            <p class="tip-text"><strong>Tip:</strong> {{ daily_tip.title }} — {{ daily_tip.short_tip|default:daily_tip.description|truncatewords:20 }}</p>
-            <button id="daily-tip-close" class="daily-tip-close" aria-label="Dismiss tip">✕</button>
-        </div>
-    {% endif %}
 </body>
 </html>

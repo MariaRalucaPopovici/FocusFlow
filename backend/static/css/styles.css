@@ -38,7 +38,7 @@
 
     --shadow: 0 3px 12px rgba(72, 51, 34, 0.07);
 
-    --bg-image: url('../images/themes/notepad.jpg');
+    --bg-image: url('../images/themes/notepad.png');
 }
 
 
@@ -338,7 +338,7 @@ body {
         sans-serif;
 
     background-color: var(--bg);
-    background-image: linear-gradient(rgba(20, 14, 10, 0.32), rgba(20, 14, 10, 0.32)), var(--bg-image);
+    background-image: var(--bg-image);
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
@@ -1326,51 +1326,38 @@ button,
 
 
 /* =========================
-   DAILY TIP POP-UP
+   DAILY TIP CARD
    ========================= */
 
 .daily-tip {
-    position: fixed;
-    bottom: 24px;
-    right: 24px;
-    max-width: 320px;
-    display: flex;
-    align-items: flex-start;
-    gap: 10px;
-    background: color-mix(in srgb, var(--surface) 70%, transparent);
-    backdrop-filter: blur(8px);
-    border: 1px solid var(--border);
-    border-radius: 12px;
-    padding: 16px 40px 16px 16px;
-    box-shadow: 0 6px 24px rgba(0, 0, 0, 0.18);
-    z-index: 9999;
+    width: 100%;
+    box-sizing: border-box;
+    margin-top: 16px;
 }
 
-.daily-tip .tip-icon {
-    font-size: 20px;
-    line-height: 1;
+.daily-tip .dashboard-card-header {
+    margin-bottom: 12px;
 }
 
-.daily-tip .tip-text {
-    font-size: 14px;
+.tip-title {
+    margin: 0 0 6px 0;
+    font-size: 17px;
+    font-weight: 700;
     color: var(--text);
-    margin: 0;
 }
 
-.daily-tip-close {
-    position: absolute;
-    top: 8px;
-    right: 10px;
-    background: none;
-    border: none;
-    font-size: 15px;
-    cursor: pointer;
+.tip-text {
+    margin: 0 0 16px 0;
     color: var(--muted);
+    font-size: 14px;
+    line-height: 1.5;
 }
 
-.muted-text {
-    color: var(--muted);
-    font-size: 13px;
+.tip-another-btn {
+    display: block;
+    width: 100%;
+    box-sizing: border-box;
+    text-align: center;
 }
 
 /* =========================
@@ -1680,31 +1667,61 @@ button,
     }
 
     .sidebar {
-        width: 100%;
-        flex-direction: row;
-        flex-wrap: wrap;
-        align-items: center;
+        width: auto;
+        height: auto;
+        position: static;
+
+        flex-direction: column;
+        align-items: stretch;
+
+        padding: 14px 16px;
+
         border-right: none;
         border-bottom: 1px solid var(--border);
-        padding: 16px;
-        position: static;
-        height: auto;
+
+        background: color-mix(in srgb, var(--surface) 92%, transparent);
+        backdrop-filter: blur(12px);
     }
 
     .sidebar-logo {
-        margin: 0 16px 0 0;
+        margin: 0 0 12px 0;
         padding: 0;
+
+        text-align: center;
+        font-size: 21px;
     }
 
     .sidebar-nav {
-        flex-direction: row;
-        flex-wrap: wrap;
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
         gap: 8px;
+        width: 100%;
+    }
+
+    .sidebar-nav a {
+        text-align: center;
+        padding: 9px 8px;
+        font-size: 14px;
+
+        background: var(--surface-soft);
+        border: 1px solid var(--border);
     }
 
     .sidebar-footer {
-        flex-direction: row;
-        margin-top: 8px;
         width: 100%;
+        margin-top: 10px;
+        padding-top: 0;
+
+        justify-content: center;
+    }
+
+    .main-content {
+        padding: 18px 14px;
+    }
+
+    .daily-tip {
+        position: static;
+        max-width: none;
+        margin: 0 14px 16px 14px;
     }
 }
